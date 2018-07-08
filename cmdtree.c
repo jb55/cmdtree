@@ -10,6 +10,8 @@
 
 #include <unistd.h>
 
+#include "util.h"
+
 static Window root, parentwin, win;
 static int screen;
 static Display *display;
@@ -19,26 +21,6 @@ static XIC xic;
 
 // config
 static int topbar = 1;
-
-#define MAX(A, B)               ((A) > (B) ? (A) : (B))
-
-static void
-die(const char *fmt, ...) {
-	va_list ap;
-
-	va_start(ap, fmt);
-	vfprintf(stderr, fmt, ap);
-	va_end(ap);
-
-	if (fmt[0] && fmt[strlen(fmt)-1] == ':') {
-		fputc(' ', stderr);
-		perror(NULL);
-	} else {
-		fputc('\n', stderr);
-	}
-
-	exit(1);
-}
 
 static void
 setup()
@@ -98,22 +80,29 @@ setup()
 }
 
 static void
+draw_tree() {
+	static const char *msg = "cmdtree is a tree of commands";
+
+	XFillRectangle(display, win, DefaultGC(display, screen),
+		       20, 20, 10, 10);
+
+	XDrawString(display, win, DefaultGC(display, screen), 10,
+		    50, msg, strlen(msg));
+}
+
+
+static void
 run() {
 	XEvent e;
 	int done = 0;
 	char buf[32];
 	KeySym ksym = NoSymbol;
 	Status status;
-	static const char *msg = "cmdtree is a tree of commands";
 
 	while (!done) {
 		XNextEvent(display, &e);
 		if (e.type == Expose) {
-			XFillRectangle(display, win, DefaultGC(display, screen),
-				       20, 20, 10, 10);
-
-			XDrawString(display, win, DefaultGC(display, screen), 10,
-				    50, msg, strlen(msg));
+			draw_tree();
 		}
 
 		if (e.type == KeyPress) {
@@ -126,6 +115,7 @@ run() {
 	}
 
 }
+
 
 int main(void) {
 
