@@ -1,5 +1,7 @@
 
+CFLAGS=-O -g -lX11 -Wall -Werror
+
 all: cmdtree
 
 cmdtree: cmdtree.c
-	$(CC) -O -g -lX11 $< -o $@
+	$(CC) $(CFLAGS) $< -o $@

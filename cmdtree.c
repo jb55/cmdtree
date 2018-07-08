@@ -2,52 +2,150 @@
 #include <X11/Xutil.h>
 #include <X11/Xresource.h>
 
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-int main(void) {
-	Display *d;
-	XIC xic;
-	Window w;
-	XEvent e;
-	char *msg = "cmdtree is a tree of commands";
-	int s;
-	char buf[32];
-	int len, done = 0;
-	KeySym ksym = NoSymbol;
-	Status status;
-	XIM xim;
 
-	d = XOpenDisplay(NULL);
-	if (d == NULL) {
-		fprintf(stderr, "Cannot open display\n");
-		exit(1);
+#include <unistd.h>
+
+static Window root, parentwin, win;
+static int screen;
+static Display *display;
+static int mw, mh;
+static unsigned int lines = 0;
+static XIC xic;
+
+// config
+static int topbar = 1;
+
+#define MAX(A, B)               ((A) > (B) ? (A) : (B))
+
+static void
+die(const char *fmt, ...) {
+	va_list ap;
+
+	va_start(ap, fmt);
+	vfprintf(stderr, fmt, ap);
+	va_end(ap);
+
+	if (fmt[0] && fmt[strlen(fmt)-1] == ':') {
+		fputc(' ', stderr);
+		perror(NULL);
+	} else {
+		fputc('\n', stderr);
 	}
 
-	s = DefaultScreen(d);
-	w = XCreateSimpleWindow(d, RootWindow(d, s), 10, 10, 100, 100, 1,
-				BlackPixel(d, s), WhitePixel(d, s));
-	xim = XOpenIM(d, NULL, NULL, NULL);
+	exit(1);
+}
+
+static void
+setup()
+{
+	int x, y;
+	XSetWindowAttributes swa;
+	XWindowAttributes wa;
+	XIM xim;
+	XClassHint ch = {"cmdtree", "cmdtree"};
+
+	if (!XGetWindowAttributes(display, parentwin, &wa))
+		die("could not get embedding window attributes: 0x%lx",
+		    parentwin);
+	x = 0;
+	y = topbar ? 0 : wa.height - mh;
+	mw = wa.width;
+	lines = MAX(lines, 0);
+	/* mh = (lines + 1) * bh; */
+	mh = 50;
+
+	swa.override_redirect = True;
+	/* swa.background_pixel = scheme[SchemeNorm][ColBg].pixel; */
+	swa.event_mask = ExposureMask | KeyPressMask | VisibilityChangeMask;
+
+	win = XCreateWindow(display, parentwin, x, y, mw, mh, 0,
+	                    CopyFromParent, CopyFromParent, CopyFromParent,
+	                    CWOverrideRedirect | CWBackPixel | CWEventMask, &swa);
+
+	XSetClassHint(display, win, &ch);
+
+	// what do?
+	/* XMapRaised(display, win); */
+
+
+	xim = XOpenIM(display, NULL, NULL, NULL);
 	xic = XCreateIC(xim, XNInputStyle, XIMPreeditNothing | XIMStatusNothing,
-			XNClientWindow, w, XNFocusWindow, w, NULL);
-	XSelectInput(d, w, ExposureMask | KeyPressMask);
-	XMapWindow(d, w);
+			XNClientWindow, win, XNFocusWindow, win, NULL);
+	XSelectInput(display, win, ExposureMask | KeyPressMask);
+	XMapWindow(display, win);
+
+
+	XSetInputFocus(display, win, RevertToParent, CurrentTime);
+
+	// XXX embed
+	/* if (embed) { */
+	/* 	XSelectInput(dpy, parentwin, FocusChangeMask); */
+	/* 	if (XQueryTree(dpy, parentwin, &dw, &w, &dws, &du) && dws) { */
+	/* 		for (i = 0; i < du && dws[i] != win; ++i) */
+	/* 			XSelectInput(dpy, dws[i], FocusChangeMask); */
+	/* 		XFree(dws); */
+	/* 	} */
+	/* 	grabfocus(); */
+	/* } */
+
+	/* drw_resize(drw, mw, mh); */
+	/* drawmenu(); */
+}
+
+static void
+run() {
+	XEvent e;
+	int done = 0;
+	char buf[32];
+	KeySym ksym = NoSymbol;
+	Status status;
+	static const char *msg = "cmdtree is a tree of commands";
 
 	while (!done) {
-		XNextEvent(d, &e);
+		XNextEvent(display, &e);
 		if (e.type == Expose) {
-			XFillRectangle(d, w, DefaultGC(d, s), 20, 20, 10, 10);
-			XDrawString(d, w, DefaultGC(d, s), 10, 50, msg, strlen(msg));
+			XFillRectangle(display, win, DefaultGC(display, screen),
+				       20, 20, 10, 10);
+
+			XDrawString(display, win, DefaultGC(display, screen), 10,
+				    50, msg, strlen(msg));
 		}
 
 		if (e.type == KeyPress) {
-			len = XmbLookupString(xic, (XKeyEvent*)&e, buf, sizeof buf, &ksym, &status);
+			XmbLookupString(xic, (XKeyEvent*)&e, buf,
+					sizeof buf, &ksym, &status);
 			if (ksym == XK_q) break;
 		}
 
 	}
 
-	XCloseDisplay(d);
+}
+
+int main(void) {
+
+	display = XOpenDisplay(NULL);
+	if (display == NULL) {
+		fprintf(stderr, "Cannot open display\n");
+		exit(1);
+	}
+
+	screen = DefaultScreen(display);
+	root = RootWindow(display, screen);
+
+	// XXX embed
+	/* if (!embed || !(parentwin = strtol(embed, NULL, 0))) */
+	/* 	parentwin = root; */
+
+	parentwin = root;
+
+	setup();
+	run();
+
+	XCloseDisplay(display);
 	return 0;
 }
