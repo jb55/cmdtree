@@ -1,0 +1,9 @@
+
+* DONE popup window
+CLOSED: [2018-07-08 Sun 12:15]
+* DONE close window on escape
+CLOSED: [2018-07-08 Sun 12:20]
+
+* TODO draw command
+
+* TODO column layout
