@@ -57,7 +57,7 @@ setup()
 	mw = wa.width;
 	lines = MAX(lines, 0);
 	/* mh = (lines + 1) * bh; */
-	mh = 50;
+	mh = 100;
 
 	swa.override_redirect = True;
 	/* swa.background_pixel = scheme[SchemeNorm][ColBg].pixel; */
@@ -119,7 +119,8 @@ run() {
 		if (e.type == KeyPress) {
 			XmbLookupString(xic, (XKeyEvent*)&e, buf,
 					sizeof buf, &ksym, &status);
-			if (ksym == XK_q) break;
+			if (ksym == XK_q) done = 1;
+			if (ksym == XK_Escape) done = 1;
 		}
 
 	}
