@@ -156,6 +156,7 @@ drw_scm_create(Drw *drw, struct scheme *schemes, size_t clrcount)
 		drw_clr_create(drw, &schemes[i].bind_clr, schemes[i].bind);
 		drw_clr_create(drw, &schemes[i].bg_clr,   schemes[i].bg);
 		drw_clr_create(drw, &schemes[i].name_clr, schemes[i].name);
+		drw_clr_create(drw, &schemes[i].arrow_clr, schemes[i].arrow);
 	}
 
 	return;
@@ -208,7 +209,7 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h,
 	XftResult result;
 	int charexists = 0;
 
-	if (!drw || (render && !drw->scheme) || !text || !drw->fonts)
+	if (!drw || (render && !drw->scheme[0]) || !text || !drw->fonts)
 		return 0;
 
 	if (!render) {

@@ -25,7 +25,8 @@ enum {
 static Window root, parentwin, win;
 static int screen;
 static Display *display;
-static int mw, mh;
+static int sep_width;
+static int bh, mw, mh;
 static XIC xic;
 
 #include "cfg.h"
@@ -60,6 +61,7 @@ setup(Drw *drw)
 	XIM xim;
 	XClassHint ch = {"cmdtree", "cmdtree"};
 
+	bh = drw->fonts->h + 2;
 	/* init appearance */
 	drw_scm_create(drw, schemes, LENGTH(schemes));
 
@@ -69,9 +71,10 @@ setup(Drw *drw)
 	x = 0;
 	y = topbar ? 0 : wa.height - mh;
 	mw = wa.width;
+	lines = 3;
 	lines = MAX(lines, 0);
-	/* mh = (lines + 1) * bh; */
-	mh = 100;
+	mh = (lines + 1) * bh;
+	sep_width = drw_fontset_getwidth(drw, separator);
 
 	swa.override_redirect = True;
 	swa.background_pixel = schemes[SchemeNorm].bg_clr.pixel;
@@ -111,43 +114,70 @@ setup(Drw *drw)
 	/* drawmenu(); */
 }
 
-static void
+static int
 draw_command(Drw *drw, int x, int y, const char *name, const char *binding) {
-	int lpad = 7;
+	int lpad = 0;
+	int pad = 0;
 	unsigned int w = 50;
-	unsigned int h = 20;
 	int invert = 0;
-	int res = 1;
 
-	x += drw_fontset_getwidth(drw, binding) + 1;
+	//drw_fontset_getwidth(drw, binding) + 1;
 
-	drw_setscheme(drw, &schemes[SchemeNorm].bg_clr,
+	drw_setscheme(drw, &schemes[SchemeNorm].bind_clr,
 		      &schemes[SchemeNorm].bg_clr);
 
-	drw_rect(drw, 0, 0, mw, mh, 1, 1);
+	w = drw_fontset_getwidth(drw, binding);
+	x = drw_text(drw, x+pad, y, w, bh, lpad, binding, invert);
 
-	drw_setscheme(drw, &schemes[SchemeSel].bind_clr,
-		      &schemes[SchemeSel].bg_clr);
+	w = sep_width;
+	drw_setscheme(drw, &schemes[SchemeNorm].arrow_clr,
+		      &schemes[SchemeNorm].bg_clr);
+	x = drw_text(drw, x+pad, y, w, bh, lpad, separator, invert);
 
-	res = drw_text(drw, x, y, w, h, lpad, binding, invert);
+	drw_setscheme(drw, &schemes[SchemeNorm].name_clr,
+		      &schemes[SchemeNorm].bg_clr);
 
-	x += drw_fontset_getwidth(drw, binding) + 10;
+	w = drw_fontset_getwidth(drw, name);
+	x = drw_text(drw, x+pad, y, w, bh, lpad, name, invert);
 
-	res = drw_text(drw, x, y, w, h, lpad, name, invert);
-	assert(res != 0);
-
+	return x;
 }
+
+/* static void */
+/* calc_tree_exts(struct node *nodes, int num_nodes, int *rows, int *cols) { */
+/* } */
 
 static void
 draw_tree(Drw *drw, int x, int y, int w, int h) {
-	draw_command(drw, x, y, "apps", "a");
-
-	x += 10;
-	if (x > w)
-		x = 0;
+	int i, dx = x, dy = y;
+	char buf[512];
+	char smallbuf[32];
 
 	if (!drw)
 		return;
+
+	drw_setscheme(drw, &schemes[SchemeNorm].bg_clr,
+		      &schemes[SchemeNorm].bg_clr);
+	drw_rect(drw, 0, 0, w, h, 1, 1);
+
+	int c = '0';
+	for (i = 0; i < 50; ++i, ++c) {
+		if (i % 2 == 0)
+			snprintf(buf, 512, "item-long-%d", i);
+		else if (i % 6 == 0)
+			snprintf(buf, 512, "herpderp-%d", i);
+		else if (i % 7 == 0)
+			snprintf(buf, 512, "ksdfsdjhfsdf-%d", i);
+		else
+			snprintf(buf, 512, "hi-%d", i);
+		if (c > '~') c = '0';
+		sprintf(smallbuf, "%c", c);
+		dx = draw_command(drw, dx, dy, buf, smallbuf) + 20;
+		if (dx >= mw) {
+			dx = 0;
+			dy += bh;
+		}
+	}
 
 	XCopyArea(drw->dpy, drw->drawable, win, drw->gc, x, y, w, h, x, y);
 	XSync(drw->dpy, False);

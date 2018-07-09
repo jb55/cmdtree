@@ -26,10 +26,12 @@ typedef XftColor Clr;
 struct scheme {
 	const char *bg;
 	const char *bind;
+	const char *arrow;
 	const char *name;
 	Clr bg_clr;
 	Clr name_clr;
 	Clr bind_clr;
+	Clr arrow_clr;
 };
 
 
