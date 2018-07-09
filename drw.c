@@ -87,7 +87,8 @@ drw_resize(Drw *drw, unsigned int w, unsigned int h)
 	drw->h = h;
 	if (drw->drawable)
 		XFreePixmap(drw->dpy, drw->drawable);
-	drw->drawable = XCreatePixmap(drw->dpy, drw->root, w, h, DefaultDepth(drw->dpy, drw->screen));
+	drw->drawable = XCreatePixmap(drw->dpy, drw->root, w, h,
+				      DefaultDepth(drw->dpy, drw->screen));
 }
 
 void
@@ -227,16 +228,19 @@ drw_rect(Drw *drw, int x, int y, unsigned int w, unsigned int h, int filled, int
 {
 	if (!drw || !drw->scheme)
 		return;
-	XSetForeground(drw->dpy, drw->gc, invert ? drw->scheme[ColBg].pixel : drw->scheme[ColFg].pixel);
+	XSetForeground(drw->dpy, drw->gc,
+		       invert ? drw->scheme[ColBg].pixel
+		              : drw->scheme[ColFg].pixel);
 	if (filled)
 		XFillRectangle(drw->dpy, drw->drawable, drw->gc, x, y, w, h);
 	else
-		XDrawRectangle(drw->dpy, drw->drawable, drw->gc, x, y, w - 1, h - 1);
+		XDrawRectangle(drw->dpy, drw->drawable, drw->gc, x, y, w - 1,
+			       h - 1);
 }
 
 int
-drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lpad, const char *text, int invert)
-{
+drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h,
+	 unsigned int lpad, const char *text, int invert) {
 	char buf[1024];
 	int ty;
 	unsigned int ew;
@@ -384,7 +388,8 @@ drw_fontset_getwidth(Drw *drw, const char *text)
 }
 
 void
-drw_font_getexts(Fnt *font, const char *text, unsigned int len, unsigned int *w, unsigned int *h)
+drw_font_getexts(Fnt *font, const char *text, unsigned int len, unsigned int *w,
+		 unsigned int *h)
 {
 	XGlyphInfo ext;
 
