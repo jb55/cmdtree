@@ -1,5 +1,2 @@
 
-* TODO draw key as well
-* TODO command/bind different color
-
 * TODO column layout
