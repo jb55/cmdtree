@@ -137,29 +137,43 @@ setup(Drw *drw)
 }
 
 static int
-draw_command(Drw *drw, int x, int y, const char *name, const char *binding) {
+draw_command(Drw *drw, int x, int y, struct command *cmd) {
+	char buf[256];
 	int lpad = 0;
 	int pad = 0;
 	unsigned int w = 50;
 	int invert = 0;
+	int isprefix = 0;
+	char *name = cmd->name;
 
 	//drw_fontset_getwidth(drw, binding) + 1;
 
 	drw_setscheme(drw, &schemes[SchemeNorm].bind_clr,
 		      &schemes[SchemeNorm].bg_clr);
 
-	w = drw_fontset_getwidth(drw, binding);
-	x = drw_text(drw, x+pad, y, w, bh, lpad, binding, invert);
+	w = drw_fontset_getwidth(drw, cmd->bind);
+	x = drw_text(drw, x+pad, y, w, bh, lpad, cmd->bind, invert);
 
 	w = sep_width;
 	drw_setscheme(drw, &schemes[SchemeNorm].arrow_clr,
 		      &schemes[SchemeNorm].bg_clr);
 	x = drw_text(drw, x+pad, y, w, bh, lpad, separator, invert);
 
-	drw_setscheme(drw, &schemes[SchemeNorm].name_clr,
-		      &schemes[SchemeNorm].bg_clr);
+	isprefix = command_is_prefix(cmd);
 
-	w = drw_fontset_getwidth(drw, name);
+	if (isprefix)
+		drw_setscheme(drw, &schemes[SchemePrefix].name_clr,
+			      &schemes[SchemePrefix].bg_clr);
+	else
+		drw_setscheme(drw, &schemes[SchemeNorm].name_clr,
+			&schemes[SchemeNorm].bg_clr);
+
+	if (isprefix) {
+		snprintf(buf, 256, "+%s", cmd->name);
+		name = buf;
+	}
+
+	w = drw_fontset_getwidth(drw, buf);
 	x = drw_text(drw, x+pad, y, w, bh, lpad, name, invert);
 
 	return x;
@@ -170,11 +184,10 @@ draw_command(Drw *drw, int x, int y, const char *name, const char *binding) {
 /* calc_tree_exts(struct node *nodes, int num_nodes, int *rows, int *cols) { */
 /* } */
 static void
-draw_tree_vertical(Drw *drw, int x, int y, int w, int h) {
+draw_tree_vertical(Drw *drw, struct command *cmds, int x, int y, int w, int h) {
 	int i;
-	char buf[512];
-	char smallbuf[32];
 	int colw = 0;
+	int ncmds = tal_count(cmds);
 
 	x += xpad;
 	y += ypad;
@@ -184,57 +197,42 @@ draw_tree_vertical(Drw *drw, int x, int y, int w, int h) {
 	drw_rect(drw, 0, 0, w, h, 1, 1);
 
 	int c = '0';
-	for (i = 0; i < 40; ++i, ++c, y += bh) {
-		if (i % 2 == 0)
-			snprintf(buf, 512, "item-long-%d", i);
-		else if (i % 6 == 0)
-			snprintf(buf, 512, "herpderp-%d", i);
-		else if (i % 7 == 0)
-			snprintf(buf, 512, "ksdfsdjhfsdf-%d", i);
-		else
-			snprintf(buf, 512, "hi-%d", i);
-		if (c > '~') c = '0';
-		sprintf(smallbuf, "%c", c);
 
-		if (y >= mh) {
-			x = colw;
-			y = 0;
-			colw = 0;
-		}
 
-		colw = MAX(draw_command(drw, x, y, buf, smallbuf) + 20, colw);
+	for (i = 0; i < ncmds; ++i, ++c, y += bh) {
+		struct command *cmd = &cmds[i];
+
+		colw = MAX(draw_command(drw, x, y, cmd) + 20, colw);
 	}
 }
 
-static void
-draw_tree_horizontal(Drw *drw, int x, int y, int w, int h) {
-	int i, dx = x, dy = y;
-	char buf[512];
-	char smallbuf[32];
+/* static void */
+/* draw_tree_horizontal(Drw *drw, struct command *cmds, int x, int y, int w, int h) { */
+/* 	int i, dx = x, dy = y; */
 
-	drw_setscheme(drw, &schemes[SchemeNorm].bg_clr,
-		      &schemes[SchemeNorm].bg_clr);
-	drw_rect(drw, 0, 0, w, h, 1, 1);
+/* 	drw_setscheme(drw, &schemes[SchemeNorm].bg_clr, */
+/* 		      &schemes[SchemeNorm].bg_clr); */
+/* 	drw_rect(drw, 0, 0, w, h, 1, 1); */
 
-	int c = '0';
-	for (i = 0; i < 50; ++i, ++c) {
-		if (i % 2 == 0)
-			snprintf(buf, 512, "item-long-%d", i);
-		else if (i % 6 == 0)
-			snprintf(buf, 512, "herpderp-%d", i);
-		else if (i % 7 == 0)
-			snprintf(buf, 512, "ksdfsdjhfsdf-%d", i);
-		else
-			snprintf(buf, 512, "hi-%d", i);
-		if (c > '~') c = '0';
-		sprintf(smallbuf, "%c", c);
-		dx = draw_command(drw, dx, dy, buf, smallbuf) + 20;
-		if (dx >= mw) {
-			dx = 0;
-			dy += bh;
-		}
-	}
-}
+/* 	int c = '0'; */
+/* 	for (i = 0; i < 50; ++i, ++c) { */
+/* 		if (i % 2 == 0) */
+/* 			snprintf(buf, 512, "item-long-%d", i); */
+/* 		else if (i % 6 == 0) */
+/* 			snprintf(buf, 512, "herpderp-%d", i); */
+/* 		else if (i % 7 == 0) */
+/* 			snprintf(buf, 512, "ksdfsdjhfsdf-%d", i); */
+/* 		else */
+/* 			snprintf(buf, 512, "hi-%d", i); */
+/* 		if (c > '~') c = '0'; */
+/* 		sprintf(smallbuf, "%c", c); */
+/* 		dx = draw_command(drw, dx, dy, cmd) + 20; */
+/* 		if (dx >= mw) { */
+/* 			dx = 0; */
+/* 			dy += bh; */
+/* 		} */
+/* 	} */
+/* } */
 
 static void
 draw_tree(Drw *drw, int x, int y, int w, int h) {
@@ -242,7 +240,7 @@ draw_tree(Drw *drw, int x, int y, int w, int h) {
 		return;
 
 	/* draw_tree_horizontal(drw, x, y, w, h); */
-	draw_tree_vertical(drw, x, y, w, h);
+	draw_tree_vertical(drw, rootcmds, x, y, w, h);
 
 	XCopyArea(drw->dpy, drw->drawable, win, drw->gc, x, y, w, h, x, y);
 	XSync(drw->dpy, False);

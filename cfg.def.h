@@ -21,17 +21,20 @@ static const char *fonts[] = {
 	"Monospace:size=14"
 };
 /* static const char *prompt      = NULL;      /\* -p  option; prompt to the left of input field *\/ */
+
+#define scheme_bg "#222222"
+
 static struct scheme schemes[SchemeLast] = {
-	[SchemeNorm]  = { .bg = "#222222",
+	[SchemeNorm]  = { .bg = scheme_bg,
 			  .bind = "#D19A66",
 			  .arrow = "#888",
 			  .name = "#bbbbbb"
 	                },
 
-	[SchemePrefix] = { .bg = "#005577",
-		       	  .bind = "#eeeeee",
-		       	  .arrow = "#666666",
-		       	  .name = "#eeeeee"
+	[SchemePrefix] = { .bg = scheme_bg,
+			   .bind = "#eeeeee",
+			   .arrow = "#888",
+			   .name = "#c678dd"
 	                 },
 };
 
