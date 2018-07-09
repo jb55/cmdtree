@@ -3,3 +3,4 @@
 *.o
 /config.h
 /TAGS
+/archive/
