@@ -14,14 +14,15 @@
 
 #include "drw.h"
 #include "util.h"
+#include "command.h"
 
 enum {
 	SchemeNorm,
-	SchemeSel,
-	SchemeOut,
+	SchemePrefix,
 	SchemeLast,
 }; /* color schemes */
 
+static struct command *rootcmds;
 static Window root, parentwin, win;
 static int screen;
 static Display *display;
@@ -68,12 +69,33 @@ setup(Drw *drw)
 	if (!XGetWindowAttributes(display, parentwin, &wa))
 		die("could not get embedding window attributes: 0x%lx",
 		    parentwin);
-	x = 0;
-	y = topbar ? 0 : wa.height - mh;
+	int vertwidth = 200;
 	mw = wa.width;
+	mh = (lines + 1) * bh;
+	switch (position) {
+	case POSITION_BOTTOM:
+		y = wa.height - mh;
+		x = 0;
+		break;
+	case POSITION_TOP:
+		x = 0;
+		y = 0;
+		break;
+	case POSITION_LEFT:
+		x = 0;
+		y = 0;
+		// TODO: calc vertwidth = max(textwidth(nodes)))
+		mw = vertwidth;
+		mh = wa.height;
+		break;
+	case POSITION_RIGHT:
+		x = wa.width - vertwidth;
+		y = 0;
+		mw = vertwidth;
+		mh = wa.height;
+	}
 	lines = 3;
 	lines = MAX(lines, 0);
-	mh = (lines + 1) * bh;
 	sep_width = drw_fontset_getwidth(drw, separator);
 
 	swa.override_redirect = True;
@@ -143,18 +165,52 @@ draw_command(Drw *drw, int x, int y, const char *name, const char *binding) {
 	return x;
 }
 
+
 /* static void */
 /* calc_tree_exts(struct node *nodes, int num_nodes, int *rows, int *cols) { */
 /* } */
+static void
+draw_tree_vertical(Drw *drw, int x, int y, int w, int h) {
+	int i;
+	char buf[512];
+	char smallbuf[32];
+	int colw = 0;
+
+	x += xpad;
+	y += ypad;
+
+	drw_setscheme(drw, &schemes[SchemeNorm].bg_clr,
+		      &schemes[SchemeNorm].bg_clr);
+	drw_rect(drw, 0, 0, w, h, 1, 1);
+
+	int c = '0';
+	for (i = 0; i < 40; ++i, ++c, y += bh) {
+		if (i % 2 == 0)
+			snprintf(buf, 512, "item-long-%d", i);
+		else if (i % 6 == 0)
+			snprintf(buf, 512, "herpderp-%d", i);
+		else if (i % 7 == 0)
+			snprintf(buf, 512, "ksdfsdjhfsdf-%d", i);
+		else
+			snprintf(buf, 512, "hi-%d", i);
+		if (c > '~') c = '0';
+		sprintf(smallbuf, "%c", c);
+
+		if (y >= mh) {
+			x = colw;
+			y = 0;
+			colw = 0;
+		}
+
+		colw = MAX(draw_command(drw, x, y, buf, smallbuf) + 20, colw);
+	}
+}
 
 static void
-draw_tree(Drw *drw, int x, int y, int w, int h) {
+draw_tree_horizontal(Drw *drw, int x, int y, int w, int h) {
 	int i, dx = x, dy = y;
 	char buf[512];
 	char smallbuf[32];
-
-	if (!drw)
-		return;
 
 	drw_setscheme(drw, &schemes[SchemeNorm].bg_clr,
 		      &schemes[SchemeNorm].bg_clr);
@@ -178,6 +234,15 @@ draw_tree(Drw *drw, int x, int y, int w, int h) {
 			dy += bh;
 		}
 	}
+}
+
+static void
+draw_tree(Drw *drw, int x, int y, int w, int h) {
+	if (!drw)
+		return;
+
+	/* draw_tree_horizontal(drw, x, y, w, h); */
+	draw_tree_vertical(drw, x, y, w, h);
 
 	XCopyArea(drw->dpy, drw->drawable, win, drw->gc, x, y, w, h, x, y);
 	XSync(drw->dpy, False);
@@ -238,6 +303,7 @@ int main(void) {
 	/* 	parentwin = root; */
 
 	parentwin = root;
+	rootcmds = test_root_commands(NULL);
 
 	if (!XGetWindowAttributes(display, parentwin, &wa))
 		die("could not get embedding window attributes: 0x%lx",
@@ -248,7 +314,7 @@ int main(void) {
 	if (!drw_fontset_create(drw, fonts, LENGTH(fonts)))
 		die("no fonts could be loaded.");
 
-	/* grabkeyboard(); */
+	grabkeyboard();
 	setup(drw);
 	run(drw);
 

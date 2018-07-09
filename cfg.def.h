@@ -1,7 +1,18 @@
 /* See LICENSE file for copyright and license details. */
 /* Default settings; can be overriden by command line. */
 
-static int topbar = 1;                      /* -b  option; if 0, dmenu appears at bottom     */
+enum position {
+	POSITION_TOP,
+	POSITION_LEFT,
+	POSITION_RIGHT,
+	POSITION_BOTTOM
+};
+
+static int xpad = 6;
+static int ypad = 2;
+
+static enum position position = POSITION_RIGHT;                      /* -b  option; if 0, dmenu appears at bottom     */
+
 
 static const char *separator = " → ";
 
@@ -17,17 +28,11 @@ static struct scheme schemes[SchemeLast] = {
 			  .name = "#bbbbbb"
 	                },
 
-	[SchemeSel]   = { .bg = "#005577",
-			  .bind = "#eeeeee",
-			  .arrow = "#666666",
-			  .name = "#eeeeee"
-	                },
-
-	[SchemeOut]   = { .bg = "#00ffff",
-			  .bind = "#000000",
-			  .arrow = "#666666",
-			  .name = "#000000"
-	                },
+	[SchemePrefix] = { .bg = "#005577",
+		       	  .bind = "#eeeeee",
+		       	  .arrow = "#666666",
+		       	  .name = "#eeeeee"
+	                 },
 };
 
 /* -l option; if nonzero, dmenu uses vertical list with given number of lines */

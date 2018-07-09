@@ -5,10 +5,12 @@ LDFLAGS=-lXft -lfontconfig
 BIN=cmdtree
 
 DEPS = $(wildcard ccan/*/*.c)
+DEPS += $(wildcard ccan/tal/str/*.c)
 
 OBJS += drw.o
 OBJS += util.o
 OBJS += cmdtree.o
+OBJS += command.o
 
 OBJS += $(DEPS:.c=.o)
 

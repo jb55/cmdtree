@@ -1,2 +1,7 @@
 
+* TODO command struct test data
+
 * TODO column layout
+
+* DONE vertical layout
+CLOSED: [2018-07-09 Mon 15:25]
