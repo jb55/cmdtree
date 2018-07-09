@@ -13,8 +13,15 @@
 #define LENGTH(X)             (sizeof X / sizeof X[0])
 #define TEXTW(X)              (drw_fontset_getwidth(drw, (X)) + lrpad)
 
+#define UTF_INVALID 0xFFFD
+#define UTF_SIZ     4
+
 
 void die(const char *fmt, ...);
 void *ecalloc(size_t nmemb, size_t size);
+
+long utf8decodebyte(const char c, size_t *i);
+size_t utf8validate(long *u, size_t i);
+size_t utf8decode(const char *c, long *u, size_t clen);
 
 #endif /* CMDTREE_UTIL_H */

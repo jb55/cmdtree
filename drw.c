@@ -8,57 +8,6 @@
 #include "drw.h"
 #include "util.h"
 
-#define UTF_INVALID 0xFFFD
-#define UTF_SIZ     4
-
-static const unsigned char utfbyte[UTF_SIZ + 1] = {0x80,    0, 0xC0, 0xE0, 0xF0};
-static const unsigned char utfmask[UTF_SIZ + 1] = {0xC0, 0x80, 0xE0, 0xF0, 0xF8};
-static const long utfmin[UTF_SIZ + 1] = {       0,    0,  0x80,  0x800,  0x10000};
-static const long utfmax[UTF_SIZ + 1] = {0x10FFFF, 0x7F, 0x7FF, 0xFFFF, 0x10FFFF};
-
-static long
-utf8decodebyte(const char c, size_t *i)
-{
-	for (*i = 0; *i < (UTF_SIZ + 1); ++(*i))
-		if (((unsigned char)c & utfmask[*i]) == utfbyte[*i])
-			return (unsigned char)c & ~utfmask[*i];
-	return 0;
-}
-
-static size_t
-utf8validate(long *u, size_t i)
-{
-	if (!BETWEEN(*u, utfmin[i], utfmax[i]) || BETWEEN(*u, 0xD800, 0xDFFF))
-		*u = UTF_INVALID;
-	for (i = 1; *u > utfmax[i]; ++i)
-		;
-	return i;
-}
-
-static size_t
-utf8decode(const char *c, long *u, size_t clen)
-{
-	size_t i, j, len, type;
-	long udecoded;
-
-	*u = UTF_INVALID;
-	if (!clen)
-		return 0;
-	udecoded = utf8decodebyte(c[0], &len);
-	if (!BETWEEN(len, 1, UTF_SIZ))
-		return 1;
-	for (i = 1, j = 1; i < clen && j < len; ++i, ++j) {
-		udecoded = (udecoded << 6) | utf8decodebyte(c[i], &type);
-		if (type)
-			return j;
-	}
-	if (j < len)
-		return 0;
-	*u = udecoded;
-	utf8validate(u, len);
-
-	return len;
-}
 
 Drw *
 drw_create(Display *dpy, int screen, Window root, unsigned int w, unsigned int h)
@@ -194,19 +143,22 @@ drw_clr_create(Drw *drw, Clr *dest, const char *clrname)
 
 /* Wrapper to create color schemes. The caller has to call free(3) on the
  * returned color scheme when done using it. */
-Clr *
-drw_scm_create(Drw *drw, const char *clrnames[], size_t clrcount)
+void
+drw_scm_create(Drw *drw, struct scheme *schemes, size_t clrcount)
 {
 	size_t i;
-	Clr *ret;
 
 	/* need at least two colors for a scheme */
-	if (!drw || !clrnames || clrcount < 2 || !(ret = ecalloc(clrcount, sizeof(Clr))))
-		return NULL;
+	if (!drw || !schemes)
+		return;
 
-	for (i = 0; i < clrcount; i++)
-		drw_clr_create(drw, &ret[i], clrnames[i]);
-	return ret;
+	for (i = 0; i < clrcount; i++) {
+		drw_clr_create(drw, &schemes[i].bind_clr, schemes[i].bind);
+		drw_clr_create(drw, &schemes[i].bg_clr,   schemes[i].bg);
+		drw_clr_create(drw, &schemes[i].name_clr, schemes[i].name);
+	}
+
+	return;
 }
 
 void
@@ -217,10 +169,10 @@ drw_setfontset(Drw *drw, Fnt *set)
 }
 
 void
-drw_setscheme(Drw *drw, Clr *scm)
+drw_setscheme(Drw *drw, Clr *fg, Clr *bg)
 {
-	if (drw)
-		drw->scheme = scm;
+	drw->scheme[ColBg] = bg;
+	drw->scheme[ColFg] = fg;
 }
 
 void
@@ -229,8 +181,8 @@ drw_rect(Drw *drw, int x, int y, unsigned int w, unsigned int h, int filled, int
 	if (!drw || !drw->scheme)
 		return;
 	XSetForeground(drw->dpy, drw->gc,
-		       invert ? drw->scheme[ColBg].pixel
-		              : drw->scheme[ColFg].pixel);
+		       invert ? drw->scheme[ColBg]->pixel
+		              : drw->scheme[ColFg]->pixel);
 	if (filled)
 		XFillRectangle(drw->dpy, drw->drawable, drw->gc, x, y, w, h);
 	else
@@ -262,7 +214,7 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h,
 	if (!render) {
 		w = ~w;
 	} else {
-		XSetForeground(drw->dpy, drw->gc, drw->scheme[invert ? ColFg : ColBg].pixel);
+		XSetForeground(drw->dpy, drw->gc, drw->scheme[invert ? ColFg : ColBg]->pixel);
 		XFillRectangle(drw->dpy, drw->drawable, drw->gc, x, y, w, h);
 		d = XftDrawCreate(drw->dpy, drw->drawable,
 		                  DefaultVisual(drw->dpy, drw->screen),
@@ -311,9 +263,11 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h,
 						; /* NOP */
 
 				if (render) {
+					Clr *c = drw->scheme[invert ? ColBg : ColFg];
 					ty = y + (h - usedfont->h) / 2 + usedfont->xfont->ascent;
-					XftDrawStringUtf8(d, &drw->scheme[invert ? ColBg : ColFg],
-					                  usedfont->xfont, x, ty, (XftChar8 *)buf, len);
+					XftDrawStringUtf8(d, c, usedfont->xfont,
+							  x, ty, (XftChar8 *)buf,
+							  len);
 				}
 				x += ew;
 				w -= ew;

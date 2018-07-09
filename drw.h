@@ -5,9 +5,12 @@
 
 #include <X11/Xft/Xft.h>
 
+
 typedef struct {
 	Cursor cursor;
 } Cur;
+
+
 
 typedef struct Fnt {
 	Display *dpy;
@@ -20,6 +23,16 @@ typedef struct Fnt {
 enum { ColFg, ColBg }; /* Clr scheme index */
 typedef XftColor Clr;
 
+struct scheme {
+	const char *bg;
+	const char *bind;
+	const char *name;
+	Clr bg_clr;
+	Clr name_clr;
+	Clr bind_clr;
+};
+
+
 typedef struct {
 	unsigned int w, h;
 	Display *dpy;
@@ -27,7 +40,7 @@ typedef struct {
 	Window root;
 	Drawable drawable;
 	GC gc;
-	Clr *scheme;
+	Clr *scheme[2];
 	Fnt *fonts;
 } Drw;
 
@@ -44,7 +57,7 @@ void drw_font_getexts(Fnt *font, const char *text, unsigned int len, unsigned in
 
 /* Colorscheme abstraction */
 void drw_clr_create(Drw *drw, Clr *dest, const char *clrname);
-Clr *drw_scm_create(Drw *drw, const char *clrnames[], size_t clrcount);
+void drw_scm_create(Drw *drw, struct scheme *clrnames, size_t clrcount);
 
 /* Cursor abstraction */
 Cur *drw_cur_create(Drw *drw, int shape);
@@ -52,7 +65,7 @@ void drw_cur_free(Drw *drw, Cur *cursor);
 
 /* Drawing context manipulation */
 void drw_setfontset(Drw *drw, Fnt *set);
-void drw_setscheme(Drw *drw, Clr *scm);
+void drw_setscheme(Drw *drw, Clr *fg, Clr *bg);
 
 /* Drawing functions */
 void drw_rect(Drw *drw, int x, int y, unsigned int w, unsigned int h, int filled, int invert);

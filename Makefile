@@ -1,12 +1,16 @@
 
-CFLAGS=-O2 -g -lX11 -Wall -Werror
+CFLAGS=-O2 -g -lX11 -Wall -Werror -I. -Wno-unused-function
 LDFLAGS=-lXft -lfontconfig
 
 BIN=cmdtree
 
+DEPS = $(wildcard ccan/*/*.c)
+
 OBJS += drw.o
 OBJS += util.o
 OBJS += cmdtree.o
+
+OBJS += $(DEPS:.c=.o)
 
 SRCS=$(OBJS:.o=.c)
 
@@ -17,10 +21,10 @@ include $(OBJS:.o=.d)
 %.d: %.c
 	$(CC) -MM $(CFLAGS) $< > $@
 
-cmdtree.c: config.h
+cmdtree.c: cfg.h
 
-config.h: config.def.h
-	cp config.def.h $@
+cfg.h: cfg.def.h
+	cp cfg.def.h $@
 
 all: cmdtree
 

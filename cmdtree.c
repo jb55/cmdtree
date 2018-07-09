@@ -27,9 +27,8 @@ static int screen;
 static Display *display;
 static int mw, mh;
 static XIC xic;
-static Clr *scheme[SchemeLast];
 
-#include "config.h"
+#include "cfg.h"
 
 
 static void
@@ -55,15 +54,14 @@ grabkeyboard(void)
 static void
 setup(Drw *drw)
 {
-	int x, y, j;
+	int x, y;
 	XSetWindowAttributes swa;
 	XWindowAttributes wa;
 	XIM xim;
 	XClassHint ch = {"cmdtree", "cmdtree"};
 
 	/* init appearance */
-	for (j = 0; j < SchemeLast; j++)
-		scheme[j] = drw_scm_create(drw, colors[j], 2);
+	drw_scm_create(drw, schemes, LENGTH(schemes));
 
 	if (!XGetWindowAttributes(display, parentwin, &wa))
 		die("could not get embedding window attributes: 0x%lx",
@@ -76,7 +74,7 @@ setup(Drw *drw)
 	mh = 100;
 
 	swa.override_redirect = True;
-	swa.background_pixel = scheme[SchemeNorm][ColBg].pixel;
+	swa.background_pixel = schemes[SchemeNorm].bg_clr.pixel;
 	swa.event_mask = ExposureMask | KeyPressMask | VisibilityChangeMask;
 
 	win = XCreateWindow(display, parentwin, x, y, mw, mh, 0,
@@ -114,35 +112,39 @@ setup(Drw *drw)
 }
 
 static void
-draw_command(Drw *drw, const char *name, const char *binding) {
-
-	int x = 50;
-	int y = 10;
-	int lpad = 0;
-	unsigned int w = 100;
-	unsigned int h = 100;
+draw_command(Drw *drw, int x, int y, const char *name, const char *binding) {
+	int lpad = 7;
+	unsigned int w = 50;
+	unsigned int h = 20;
 	int invert = 0;
 	int res = 1;
 
-	/* XFillRectangle(display, win, DefaultGC(display, screen), x, y, 10, 10); */
+	x += drw_fontset_getwidth(drw, binding) + 1;
 
-	drw_setscheme(drw, scheme[SchemeNorm]);
+	drw_setscheme(drw, &schemes[SchemeNorm].bg_clr,
+		      &schemes[SchemeNorm].bg_clr);
+
 	drw_rect(drw, 0, 0, mw, mh, 1, 1);
-	drw_setscheme(drw, scheme[SchemeSel]);
+
+	drw_setscheme(drw, &schemes[SchemeSel].bind_clr,
+		      &schemes[SchemeSel].bg_clr);
+
+	res = drw_text(drw, x, y, w, h, lpad, binding, invert);
+
+	x += drw_fontset_getwidth(drw, binding) + 10;
+
 	res = drw_text(drw, x, y, w, h, lpad, name, invert);
-	(void)res;
 	assert(res != 0);
 
-	/* XDrawString(drw->dpy, win, DefaultGC(display, screen), 10, 50, name, */
-	/* 	    strlen(name)); */
-
-	/* XDrawString(drw->dpy, win, DefaultGC(display, screen), 10, 50, name, */
-	/* 	    strlen(name)); */
 }
 
 static void
 draw_tree(Drw *drw, int x, int y, int w, int h) {
-	draw_command(drw, "apps", "a");
+	draw_command(drw, x, y, "apps", "a");
+
+	x += 10;
+	if (x > w)
+		x = 0;
 
 	if (!drw)
 		return;
@@ -154,11 +156,6 @@ draw_tree(Drw *drw, int x, int y, int w, int h) {
 
 static void
 cleanup(Drw *drw, int code) {
-	int i;
-
-	for (i = 0; i < SchemeLast; i++)
-		free(scheme[i]);
-
 	drw_free(drw);
 	exit(0);
 }
@@ -221,7 +218,7 @@ int main(void) {
 	if (!drw_fontset_create(drw, fonts, LENGTH(fonts)))
 		die("no fonts could be loaded.");
 
-	grabkeyboard();
+	/* grabkeyboard(); */
 	setup(drw);
 	run(drw);
 

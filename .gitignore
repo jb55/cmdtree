@@ -1,6 +1,6 @@
 /cmdtree
 *.d
 *.o
-/config.h
+/cfg.h
 /TAGS
 /archive/

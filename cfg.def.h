@@ -7,12 +7,12 @@ static const char *fonts[] = {
 	"Monospace:size=12"
 };
 /* static const char *prompt      = NULL;      /\* -p  option; prompt to the left of input field *\/ */
-static const char *colors[SchemeLast][2] = {
-	/*     fg         bg       */
-	[SchemeNorm] = { "#bbbbbb", "#222222" },
-	[SchemeSel] = { "#eeeeee", "#005577" },
-	[SchemeOut] = { "#000000", "#00ffff" },
+static struct scheme schemes[SchemeLast] = {
+	[SchemeNorm] = { .bg = "#222222", .bind = "#bbbbbb", .name = "#bbbbbb" },
+	[SchemeSel]  = { .bg = "#005577", .bind = "#eeeeee", .name = "#eeeeee" },
+	[SchemeOut]  = { .bg = "#00ffff", .bind = "#000000", .name = "#000000" },
 };
+
 /* -l option; if nonzero, dmenu uses vertical list with given number of lines */
 static unsigned int lines      = 0;
 
