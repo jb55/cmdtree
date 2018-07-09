@@ -18,7 +18,7 @@ static const char *separator = " → ";
 
 /* -fn option overrides fonts[0]; default X11 font or font set */
 static const char *fonts[] = {
-	"Monospace:size=14"
+	"monospace:size=14"
 };
 /* static const char *prompt      = NULL;      /\* -p  option; prompt to the left of input field *\/ */
 
@@ -28,12 +28,14 @@ static struct scheme schemes[SchemeLast] = {
 	[SchemeNorm]  = { .bg = scheme_bg,
 			  .bind = "#D19A66",
 			  .arrow = "#888",
+			  .prefix = "",
 			  .name = "#bbbbbb"
 	                },
 
 	[SchemePrefix] = { .bg = scheme_bg,
 			   .bind = "#eeeeee",
 			   .arrow = "#888",
+			   .prefix = "",
 			   .name = "#c678dd"
 	                 },
 };

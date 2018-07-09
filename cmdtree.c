@@ -145,6 +145,9 @@ draw_command(Drw *drw, int x, int y, struct command *cmd) {
 	int invert = 0;
 	int isprefix = 0;
 	char *name = cmd->name;
+	struct scheme *prefix = &schemes[SchemePrefix];
+	struct scheme *norm = &schemes[SchemeNorm];
+	struct scheme *scheme = NULL;
 
 	//drw_fontset_getwidth(drw, binding) + 1;
 
@@ -162,18 +165,18 @@ draw_command(Drw *drw, int x, int y, struct command *cmd) {
 	isprefix = command_is_prefix(cmd);
 
 	if (isprefix)
-		drw_setscheme(drw, &schemes[SchemePrefix].name_clr,
-			      &schemes[SchemePrefix].bg_clr);
+		scheme = prefix;
 	else
-		drw_setscheme(drw, &schemes[SchemeNorm].name_clr,
-			&schemes[SchemeNorm].bg_clr);
+		scheme = norm;
 
-	if (isprefix) {
-		snprintf(buf, 256, "+%s", cmd->name);
+	drw_setscheme(drw, &scheme->name_clr, &scheme->bg_clr);
+
+	if (scheme->prefix && strlen(scheme->prefix) != 0) {
+		snprintf(buf, 256, "%s%s", scheme->prefix, cmd->name);
 		name = buf;
 	}
 
-	w = drw_fontset_getwidth(drw, buf);
+	w = drw_fontset_getwidth(drw, name);
 	x = drw_text(drw, x+pad, y, w, bh, lpad, name, invert);
 
 	return x;
@@ -201,7 +204,11 @@ draw_tree_vertical(Drw *drw, struct command *cmds, int x, int y, int w, int h) {
 
 	for (i = 0; i < ncmds; ++i, ++c, y += bh) {
 		struct command *cmd = &cmds[i];
-
+		if (y >= mh) {
+			x = colw;
+			y = 0;
+			colw = 0;
+		}
 		colw = MAX(draw_command(drw, x, y, cmd) + 20, colw);
 	}
 }

@@ -28,6 +28,7 @@ struct scheme {
 	const char *bind;
 	const char *arrow;
 	const char *name;
+	const char *prefix;
 	Clr bg_clr;
 	Clr name_clr;
 	Clr bind_clr;
