@@ -17,6 +17,11 @@ include $(OBJS:.o=.d)
 %.d: %.c
 	$(CC) -MM $(CFLAGS) $< > $@
 
+cmdtree.c: config.h
+
+config.h: config.def.h
+	cp config.def.h $@
+
 all: cmdtree
 
 $(BIN): $(OBJS)
@@ -24,5 +29,8 @@ $(BIN): $(OBJS)
 
 clean: fake
 	rm -f $(OBJS) $(BIN)
+
+TAGS: fake
+	etags *.c
 
 .PHONY: fake

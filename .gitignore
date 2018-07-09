@@ -1,3 +1,5 @@
 /cmdtree
 *.d
 *.o
+/config.h
+/TAGS

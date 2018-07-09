@@ -252,8 +252,12 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lp
 	XftResult result;
 	int charexists = 0;
 
+	printf("1\n");
+
 	if (!drw || (render && !drw->scheme) || !text || !drw->fonts)
 		return 0;
+
+	printf("2\n");
 
 	if (!render) {
 		w = ~w;
@@ -266,6 +270,8 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lp
 		x += lpad;
 		w -= lpad;
 	}
+
+	printf("3\n");
 
 	usedfont = drw->fonts;
 	while (1) {
@@ -363,6 +369,7 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lp
 
 	return x + (render ? w : 0);
 }
+
 
 void
 drw_map(Drw *drw, Window win, int x, int y, unsigned int w, unsigned int h)
