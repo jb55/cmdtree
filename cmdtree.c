@@ -39,6 +39,22 @@ static int sep_width;
 static int bh, mw, mh;
 static XIC xic;
 
+#define DEFCMD(b, nme, cmd)			\
+	{ .bind = (b),				\
+			.name = (nme),		\
+			.command = (cmd),	\
+			.nchildren = 0,		\
+			.children = NULL,	\
+			},
+
+#define DEFPREFIX(b, nme, cs)				\
+	{ .bind = b,					\
+			.name = nme,			\
+			.command = 0,			\
+			.nchildren = LENGTH(cs),	\
+			.children = (cs),		\
+			},
+
 #include "cfg.h"
 
 static int
