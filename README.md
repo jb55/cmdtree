@@ -47,3 +47,11 @@ Key Bindings
 ESC         quit
 Backspace   go up one level
 ```
+
+
+Shout-outs
+----------
+
+Thanks to the dmenu developers I was able to reuse and repurpose their drw_
+machinery for cmdtree! This project shares dmenu's [LICENSE](LICENSE) as much of
+the code was ported from there. Thanks!
