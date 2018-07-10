@@ -43,8 +43,9 @@ static struct command test_commands[] = {
 	DEFCMD("t", "test command", "echo ok")
 };
 
+
 static struct command browser_commands[] = {
-	DEFCMD("s", "chrome scaled", "chrome")
+	DEFCMD("s", "chrome scaled", "chromium --force-device-scale-factor=1.25")
 	DEFCMD("c", "chromium", "chromium")
 	DEFCMD("f", "firefox", "firefox")
 	DEFCMD("k", "kill chrome", "pkill --oldest chromium")
@@ -53,5 +54,5 @@ static struct command browser_commands[] = {
 
 static struct command commands[] = {
 	DEFPREFIX("b", "browsers", browser_commands)
-	DEFCMD("e", "emacs", "emacs-dev")
+	DEFCMD("e", "emacs", "emacs")
 };
