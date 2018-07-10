@@ -179,7 +179,7 @@ drw_setscheme(Drw *drw, Clr *fg, Clr *bg)
 void
 drw_rect(Drw *drw, int x, int y, unsigned int w, unsigned int h, int filled, int invert)
 {
-	if (!drw || !drw->scheme)
+	if (!drw)
 		return;
 	XSetForeground(drw->dpy, drw->gc,
 		       invert ? drw->scheme[ColBg]->pixel

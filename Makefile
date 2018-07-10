@@ -1,6 +1,7 @@
 
-CFLAGS=-O2 -g -lX11 -Wall -Werror -I. -Wno-unused-function
-LDFLAGS=-lXft -lfontconfig
+CFLAGS=-O2 -g -Wall -Werror -I. -Wno-unused-function
+LDFLAGS=-lXft -lfontconfig -lX11 
+PREFIX ?= /usr/local
 
 BIN=cmdtree
 
@@ -32,6 +33,10 @@ $(BIN): $(OBJS)
 
 clean: fake
 	rm -f $(OBJS) $(BIN) *.d
+
+install: $(BIN)
+	mkdir -p $(PREFIX)/bin
+	cp $(BIN) $(PREFIX)/bin
 
 TAGS: fake
 	etags *.c
