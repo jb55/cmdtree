@@ -292,8 +292,9 @@ run(Drw *drw) {
 					rootcmds = cmd->children;
 					draw_tree(drw, 0, 0, mw, mh);
 				}
-				else // TODO: launch command
-					done = 1;
+				else {
+					command_exec(cmd);
+				}
 			}
 
 			break;

@@ -4,6 +4,8 @@
 #include "ccan/tal/tal.h"
 #include "ccan/tal/str/str.h"
 #include "ccan/str/str.h"
+#include <err.h>
+#include <unistd.h>
 
 #include "util.h"
 
@@ -18,6 +20,11 @@ command_is_prefix(struct command *cmd) {
 	return count > 0;
 }
 
+void
+command_exec(struct command *cmd) {
+	execlp(cmd->name, cmd->name, (char *)NULL);
+	err(1, "executing command %s", cmd->name);
+}
 
 struct command *
 command_lookup(struct command *cmd, const char *binding) {
@@ -33,7 +40,7 @@ command_lookup(struct command *cmd, const char *binding) {
 static const struct command examples[] = {
   { .bind = "f", .name = "firefox" },
   { .bind = "m", .name = "misc" },
-  { .bind = "e", .name = "spacemacs" },
+  { .bind = "e", .name = "emacs" },
   { .bind = "N", .name = "networking" },
 };
 
@@ -57,7 +64,7 @@ test_root_commands(tal_t *ctx) {
 		}
 		child = cmds[i].children = tal_arr(cmds, struct command, i % 2);
 		for (j = 0; j < tal_count(child); j++) {
-			child[j].name = tal_fmt(child, "child-%d-%d", (int)i, (int)j);
+			child[j].name = "sayhi";
 			child[j].bind = tal_fmt(child, "%c", (int)(c+j));
 			child[j].children = NULL;
 		}
