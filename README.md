@@ -7,7 +7,7 @@ cmdtree
 cmdtree is a command launcher in the form of a trie. Commands are launched by a
 sequence of keys that form a path in this trie.
 
-Configuring cmdtree is easy (this format is still WIP):
+Configuring cmdtree is easy (not yet implemented, still WIP):
 
 `~/.cmdtreerc` or `~/.config/cmdtree/cmdtreerc`:
 
