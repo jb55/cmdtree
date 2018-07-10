@@ -17,7 +17,7 @@ command_is_prefix(struct command *cmd) {
 
 void
 command_exec(struct command *cmd) {
-	execlp(cmd->name, cmd->name, (char *)NULL);
+	execlp("/bin/sh", "sh", "-c", cmd->name, (char *) 0);
 	err(1, "executing command %s", cmd->name);
 }
 

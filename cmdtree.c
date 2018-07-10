@@ -22,8 +22,16 @@ enum {
 	SchemeLast,
 }; /* color schemes */
 
-static struct command *rootcmds;
-static int ncmds;
+
+struct cmdstack {
+	struct command *children;
+	int nchildren;
+};
+
+#define CMDSTACK_SIZE 32
+static struct cmdstack cmdstack[CMDSTACK_SIZE];
+static int cmdstack_ptr = 0;
+
 static Window root, parentwin, win;
 static int screen;
 static Display *display;
@@ -33,6 +41,35 @@ static XIC xic;
 
 #include "cfg.h"
 
+
+static int
+cmdstack_push_(struct command *children, int nchildren) {
+	if (cmdstack_ptr + 1 >= CMDSTACK_SIZE)
+		return 0;
+	cmdstack[cmdstack_ptr].children = children;
+	cmdstack[cmdstack_ptr].nchildren = nchildren;
+	cmdstack_ptr++;
+	return 1;
+}
+
+static int
+cmdstack_push(struct command *cmd) {
+	return cmdstack_push_(cmd->children, cmd->nchildren);
+}
+
+struct cmdstack *
+cmdstack_top() {
+	assert(cmdstack_ptr >= 1);
+	return &cmdstack[cmdstack_ptr-1];
+}
+
+struct cmdstack *
+cmdstack_pop() {
+	if (cmdstack_ptr == 1)
+		return 0;
+
+	return &cmdstack[cmdstack_ptr--];
+}
 
 static void
 grabkeyboard(void)
@@ -183,7 +220,7 @@ draw_command(Drw *drw, int x, int y, struct command *cmd) {
 /* calc_tree_exts(struct node *nodes, int num_nodes, int *rows, int *cols) { */
 /* } */
 static void
-draw_tree_vertical(Drw *drw, struct command *cmds, int x, int y, int w, int h) {
+draw_tree_vertical(Drw *drw, struct command *cmds, int ncmds, int x, int y, int w, int h) {
 	int i;
 	int colw = 0;
 
@@ -240,8 +277,11 @@ draw_tree(Drw *drw, int x, int y, int w, int h) {
 	if (!drw)
 		return;
 
+	struct cmdstack *cmdstack = cmdstack_top();
+
 	/* draw_tree_horizontal(drw, x, y, w, h); */
-	draw_tree_vertical(drw, rootcmds, x, y, w, h);
+	draw_tree_vertical(drw, cmdstack->children, cmdstack->nchildren, x, y,
+			   w, h);
 
 	XCopyArea(drw->dpy, drw->drawable, win, drw->gc, x, y, w, h, x, y);
 	XSync(drw->dpy, False);
@@ -262,6 +302,7 @@ run(Drw *drw) {
 	KeySym ksym = NoSymbol;
 	Status status;
 	int code = 0;
+	struct cmdstack *cmdstack = NULL;
 	struct command *cmd = NULL;
 
 	while (!done) {
@@ -280,13 +321,18 @@ run(Drw *drw) {
 				done = 1;
 				break;
 			}
+			else if (ksym == XK_BackSpace) {
+				if (cmdstack_pop())
+					draw_tree(drw, 0, 0, mw, mh);
+			}
 
-			cmd = command_lookup(rootcmds, ncmds, buf);
+			cmdstack = cmdstack_top();
+			cmd = command_lookup(cmdstack->children,
+					     cmdstack->nchildren, buf);
 
 			if (cmd) {
 				if (command_is_prefix(cmd)) {
-					rootcmds = cmd->children;
-					ncmds = cmd->nchildren;
+					cmdstack_push(cmd);
 					draw_tree(drw, 0, 0, mw, mh);
 				}
 				else {
@@ -320,8 +366,10 @@ int main(void) {
 	/* 	parentwin = root; */
 
 	parentwin = root;
-	ncmds = LENGTH(commands);
-	rootcmds = test_root_commands(NULL, commands, ncmds);
+	/* struct command *cmds = */
+	/* 	test_root_commands(NULL, commands, cmdstack->nchildren); */
+	int res = cmdstack_push_(commands, LENGTH(commands));
+	assert(res);
 
 	if (!XGetWindowAttributes(display, parentwin, &wa))
 		die("could not get embedding window attributes: 0x%lx",
