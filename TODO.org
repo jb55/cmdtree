@@ -1,4 +1,8 @@
 
+* TODO add current prefix to a "label" section
+
+so we know what section we're in
+
 * TODO load config from file
 
 * TODO column layout
