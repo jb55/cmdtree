@@ -4,9 +4,6 @@ LDFLAGS=-lXft -lfontconfig
 
 BIN=cmdtree
 
-DEPS = $(wildcard ccan/*/*.c)
-DEPS += $(wildcard ccan/tal/str/*.c)
-
 OBJS += drw.o
 OBJS += util.o
 OBJS += cmdtree.o
@@ -34,7 +31,7 @@ $(BIN): $(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
 
 clean: fake
-	rm -f $(OBJS) $(BIN)
+	rm -f $(OBJS) $(BIN) *.d
 
 TAGS: fake
 	etags *.c
