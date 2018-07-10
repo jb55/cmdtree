@@ -1,6 +1,6 @@
 
 cmdtree
-======= 
+=======
 
 ![cmdtree](https://jb55.com/s/cmdtree.png)
 
@@ -11,7 +11,9 @@ Configuring cmdtree is easy (this format is still WIP):
 
 `~/.cmdtreerc` or `~/.config/cmdtree/cmdtreerc`:
 
-    (a application
-      (b chrome --force-device-scale-factor=1.25)
-      (e emacs)
-    )
+    (commands
+     (a application
+        (b chrome)
+        (e emacs))
+     (e email
+        (f fetch-email)))
