@@ -34,6 +34,9 @@ libX11 and libXft are required. Once you have those installed, simply type:
 
     make && make install || sudo make install
 
+To launch `cmdtree` with a key binding, use something like
+[xbindkeys](https://wiki.archlinux.org/index.php/Xbindkeys)
+
 
 Key Bindings
 ------------
