@@ -91,7 +91,8 @@ static struct command commands[] = {
 	DEFCMD("d", "date", "n mydate")
 	DEFCMD("e", "emacs", "emacs-dev")
 	DEFPREFIX("n", "notmuch", email_commands)
-	DEFPREFIX("p", "phone", phone_commands)
+	DEFPREFIX("P", "phone", phone_commands)
+	DEFCMD("p", "power", "n acpi")
 	DEFPREFIX("s", "system", system_commands)
 	DEFPREFIX("v", "vm", vm_commands)
 };
