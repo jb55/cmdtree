@@ -36,20 +36,28 @@ command_lookup(struct command *cmd, int ncmds, const char *binding) {
 	return NULL;
 }
 
-static struct command emacs_commands[] = {
-  { .bind = "d", .name = "emacs-dev", .nchildren = 0, .children = NULL },
+/* static struct command emacs_commands[] = { */
+/*   { .bind = "d", .name = "emacs-dev", .nchildren = 0, .children = NULL }, */
+/* }; */
+
+static struct command browser_commands[] = {
+  { .bind = "s", .name = "chrome", .nchildren = 0, .children = NULL },
+  { .bind = "c", .name = "chromium", .nchildren = 0, .children = NULL },
+  { .bind = "f", .name = "firefox", .nchildren = 0, .children = NULL },
 };
 
 static const struct command examples[] = {
-  { .bind = "f", .name = "firefox", .nchildren = 0, .children = NULL },
-
-  { .bind = "e",
-    .name = "emacs",
-    .children = emacs_commands,
-    .nchildren = LENGTH(emacs_commands)
+  { .bind = "b",
+    .name = "browsers",
+    .nchildren = LENGTH(browser_commands),
+    .children = browser_commands
   },
 
-  { .bind = "N", .name = "networking", .nchildren = 0, .children = NULL },
+  { .bind = "e",
+    .name = "emacs-dev",
+    .children = NULL,
+    .nchildren = 0
+  },
 };
 
 struct command *

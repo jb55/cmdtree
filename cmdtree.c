@@ -72,7 +72,7 @@ setup(Drw *drw)
 		    parentwin);
 	int vertwidth = 200;
 	mw = wa.width;
-	mh = (lines + 1) * bh;
+	mh = 1 * bh;
 	switch (position) {
 	case POSITION_BOTTOM:
 		y = wa.height - mh;
@@ -95,8 +95,6 @@ setup(Drw *drw)
 		mw = vertwidth;
 		mh = wa.height;
 	}
-	lines = 3;
-	lines = MAX(lines, 0);
 	sep_width = drw_fontset_getwidth(drw, separator);
 
 	swa.override_redirect = True;
