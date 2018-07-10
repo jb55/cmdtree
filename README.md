@@ -4,6 +4,8 @@ cmdtree
 
 ![cmdtree](https://jb55.com/s/cmdtree.png)
 
+![cmdtree2](https://jb55.com/s/cmdtree2.png)
+
 cmdtree is a command launcher in the form of a trie. Commands are launched by a
 sequence of keys that form a path in this trie.
 
