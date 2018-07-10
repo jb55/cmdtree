@@ -25,8 +25,17 @@ dmenu. You will need to tweak [cfg.def.h](cfg.def.h) to your liking before
 building. This is temporary until the configuration file format is complete, but
 it has the benefit of being quite fast to launch!
 
+Installing
+----------
 
-key bindings
+First customize [cfg.def.h](cfg.def.h) to include your menu items.
+
+libX11 and libXft are required. Once you have those installed, simply type:
+
+    make && make install || sudo make install
+
+
+Key Bindings
 ------------
 
 ```
