@@ -50,6 +50,27 @@ static struct command bitcoin_commands[] = {
 	DEFCMD("p", "price", "n btc")
 };
 
+static struct command chromecast_commands[] = {
+	DEFCMD("s", "stop", "n chromecast s stopped")
+	DEFCMD("m", "mute", "n chromecast m muted")
+};
+
+static struct command phone_music_commands[] = {
+	DEFCMD("p", "play/pause", "phonectl music:playpause")
+	DEFCMD("u", "volume up", "phonectl music:up")
+	DEFCMD("d", "volume down", "phonectl music:down")
+};
+
+static struct command phone_commands[] = {
+	DEFCMD("b", "battery", "n phone-batt")
+	DEFCMD("c", "copy clipboard", "phone-clipboard | xclip")
+	DEFPREFIX("m", "music", phone_music_commands)
+};
+
+static struct command email_commands[] = {
+	DEFCMD("f", "fetch", "systemctl --user restart home-email-notifier")
+};
+
 static struct command vm_commands[] = {
 	DEFCMD("p", "pause/resume", "vmtoggle")
 };
@@ -59,13 +80,17 @@ static struct command system_commands[] = {
 	DEFCMD("s", "my suspend", "my-suspend")
 	DEFCMD("r", "reboot", "reboot")
 	DEFCMD("k", "kill session", "killsession")
+	DEFCMD("i", "init user session", "initx")
 };
 
 static struct command commands[] = {
 	DEFPREFIX("b", "browsers", browser_commands)
 	DEFPREFIX("B", "bitcoin", bitcoin_commands)
+	DEFPREFIX("c", "chromecast", chromecast_commands)
 	DEFCMD("d", "date", "n mydate")
 	DEFCMD("e", "emacs", "emacs-dev")
+	DEFPREFIX("n", "notmuch", email_commands)
+	DEFPREFIX("p", "phone", phone_commands)
 	DEFPREFIX("s", "system", system_commands)
-	DEFPREFIX("v", "vm commands", vm_commands)
+	DEFPREFIX("v", "vm", vm_commands)
 };
