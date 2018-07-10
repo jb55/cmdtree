@@ -39,3 +39,22 @@ static struct scheme schemes[SchemeLast] = {
 	                 },
 };
 
+static struct command browser_commands[] = {
+	{ .bind = "s", .name = "chrome", .nchildren = 0, .children = NULL },
+	{ .bind = "c", .name = "chromium", .nchildren = 0, .children = NULL },
+	{ .bind = "f", .name = "firefox", .nchildren = 0, .children = NULL },
+};
+
+static const struct command commands[] = {
+	{ .bind = "b",
+	  .name = "browsers",
+	  .nchildren = LENGTH(browser_commands),
+	  .children = browser_commands
+	},
+
+	{ .bind = "e",
+	  .name = "emacs-dev",
+	  .children = NULL,
+	  .nchildren = 0
+	},
+};

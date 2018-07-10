@@ -40,39 +40,18 @@ command_lookup(struct command *cmd, int ncmds, const char *binding) {
 /*   { .bind = "d", .name = "emacs-dev", .nchildren = 0, .children = NULL }, */
 /* }; */
 
-static struct command browser_commands[] = {
-  { .bind = "s", .name = "chrome", .nchildren = 0, .children = NULL },
-  { .bind = "c", .name = "chromium", .nchildren = 0, .children = NULL },
-  { .bind = "f", .name = "firefox", .nchildren = 0, .children = NULL },
-};
-
-static const struct command examples[] = {
-  { .bind = "b",
-    .name = "browsers",
-    .nchildren = LENGTH(browser_commands),
-    .children = browser_commands
-  },
-
-  { .bind = "e",
-    .name = "emacs-dev",
-    .children = NULL,
-    .nchildren = 0
-  },
-};
-
 struct command *
-test_root_commands(tal_t *ctx, int *ncmds) {
-	unsigned long i;
+test_root_commands(tal_t *ctx, const struct command *commands, int ncmds) {
+	int i;
 	struct command *cmds = NULL;
 
-	cmds = tal_arr(ctx, struct command, LENGTH(examples));
-	*ncmds = LENGTH(examples);
+	cmds = tal_arr(ctx, struct command, ncmds);
 
-	for (i = 0; i < LENGTH(examples); ++i) {
-		cmds[i].children = examples[i].children;
-		cmds[i].name = examples[i].name;
-		cmds[i].bind = examples[i].bind;
-		cmds[i].nchildren = examples[i].nchildren;
+	for (i = 0; i < ncmds; ++i) {
+		cmds[i].children = commands[i].children;
+		cmds[i].name = commands[i].name;
+		cmds[i].bind = commands[i].bind;
+		cmds[i].nchildren = commands[i].nchildren;
 	}
 
 	return cmds;

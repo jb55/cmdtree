@@ -320,7 +320,8 @@ int main(void) {
 	/* 	parentwin = root; */
 
 	parentwin = root;
-	rootcmds = test_root_commands(NULL, &ncmds);
+	ncmds = LENGTH(commands);
+	rootcmds = test_root_commands(NULL, commands, ncmds);
 
 	if (!XGetWindowAttributes(display, parentwin, &wa))
 		die("could not get embedding window attributes: 0x%lx",
@@ -331,7 +332,7 @@ int main(void) {
 	if (!drw_fontset_create(drw, fonts, LENGTH(fonts)))
 		die("no fonts could be loaded.");
 
-	/* grabkeyboard(); */
+	grabkeyboard();
 	setup(drw);
 	run(drw);
 
