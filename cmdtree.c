@@ -23,6 +23,7 @@ enum {
 }; /* color schemes */
 
 static struct command *rootcmds;
+static int ncmds;
 static Window root, parentwin, win;
 static int screen;
 static Display *display;
@@ -187,7 +188,6 @@ static void
 draw_tree_vertical(Drw *drw, struct command *cmds, int x, int y, int w, int h) {
 	int i;
 	int colw = 0;
-	int ncmds = tal_count(cmds);
 
 	x += xpad;
 	y += ypad;
@@ -197,7 +197,6 @@ draw_tree_vertical(Drw *drw, struct command *cmds, int x, int y, int w, int h) {
 	drw_rect(drw, 0, 0, w, h, 1, 1);
 
 	int c = '0';
-
 
 	for (i = 0; i < ncmds; ++i, ++c, y += bh) {
 		struct command *cmd = &cmds[i];
@@ -254,7 +253,6 @@ draw_tree(Drw *drw, int x, int y, int w, int h) {
 static void
 cleanup(Drw *drw, int code) {
 	drw_free(drw);
-	tal_free(rootcmds);
 	exit(0);
 }
 
@@ -285,11 +283,12 @@ run(Drw *drw) {
 				break;
 			}
 
-			cmd = command_lookup(rootcmds, buf);
+			cmd = command_lookup(rootcmds, ncmds, buf);
 
 			if (cmd) {
 				if (command_is_prefix(cmd)) {
 					rootcmds = cmd->children;
+					ncmds = cmd->nchildren;
 					draw_tree(drw, 0, 0, mw, mh);
 				}
 				else {
@@ -323,7 +322,7 @@ int main(void) {
 	/* 	parentwin = root; */
 
 	parentwin = root;
-	rootcmds = test_root_commands(NULL);
+	rootcmds = test_root_commands(NULL, &ncmds);
 
 	if (!XGetWindowAttributes(display, parentwin, &wa))
 		die("could not get embedding window attributes: 0x%lx",
@@ -334,7 +333,7 @@ int main(void) {
 	if (!drw_fontset_create(drw, fonts, LENGTH(fonts)))
 		die("no fonts could be loaded.");
 
-	grabkeyboard();
+	/* grabkeyboard(); */
 	setup(drw);
 	run(drw);
 

@@ -7,8 +7,8 @@
 struct command {
 	char *name;
 	char *bind;
-	char *exec;
 	struct command *children;
+	int nchildren;
 };
 
 
@@ -18,14 +18,13 @@ command_init(struct command *cmd);
 void
 command_exec(struct command *cmd);
 
-struct command *
-command_lookup(struct command *cmd, const char *binding);
-
 int
 command_is_prefix(struct command *cmd);
 
+struct command *
+command_lookup(struct command *cmd, int ncmds, const char *binding);
 
 struct command *
-test_root_commands(tal_t *ctx);
+test_root_commands(tal_t *ctx, int *ncmds);
 
 #endif /* CMDTREE_COMMAND_H */

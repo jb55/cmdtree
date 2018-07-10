@@ -6,18 +6,13 @@
 #include "ccan/str/str.h"
 #include <err.h>
 #include <unistd.h>
+#include <stdio.h>
 
 #include "util.h"
 
-void
-command_init(struct command *cmd) {
-	cmd->children = NULL;
-}
-
 int
 command_is_prefix(struct command *cmd) {
-	size_t count = tal_count(cmd->children);
-	return count > 0;
+	return cmd->nchildren > 0;
 }
 
 void
@@ -26,10 +21,14 @@ command_exec(struct command *cmd) {
 	err(1, "executing command %s", cmd->name);
 }
 
+int
+command_num_children(struct command *cmd) {
+	return tal_count(cmd) || cmd->nchildren;
+}
+
 struct command *
-command_lookup(struct command *cmd, const char *binding) {
-	size_t len = tal_count(cmd);
-	for (size_t i = 0; i < len; ++i) {
+command_lookup(struct command *cmd, int ncmds, const char *binding) {
+	for (int i = 0; i < ncmds; ++i) {
 		if (streq(binding, cmd[i].bind))
 			return &cmd[i];
 	}
@@ -37,37 +36,35 @@ command_lookup(struct command *cmd, const char *binding) {
 	return NULL;
 }
 
+static struct command emacs_commands[] = {
+  { .bind = "d", .name = "emacs-dev", .nchildren = 0, .children = NULL },
+};
+
 static const struct command examples[] = {
-  { .bind = "f", .name = "firefox" },
-  { .bind = "m", .name = "misc" },
-  { .bind = "e", .name = "emacs" },
-  { .bind = "N", .name = "networking" },
+  { .bind = "f", .name = "firefox", .nchildren = 0, .children = NULL },
+
+  { .bind = "e",
+    .name = "emacs",
+    .children = emacs_commands,
+    .nchildren = LENGTH(emacs_commands)
+  },
+
+  { .bind = "N", .name = "networking", .nchildren = 0, .children = NULL },
 };
 
 struct command *
-test_root_commands(tal_t *ctx) {
-	unsigned long i, j;
+test_root_commands(tal_t *ctx, int *ncmds) {
+	unsigned long i;
 	struct command *cmds = NULL;
-	struct command *child = NULL;
 
-	cmds = tal_arr(ctx, struct command, 10);
+	cmds = tal_arr(ctx, struct command, LENGTH(examples));
+	*ncmds = LENGTH(examples);
 
-	const unsigned long c = 'a';
-	for (i = 0; i < tal_count(cmds); i++) {
-		if (i < LENGTH(examples)) {
-			cmds[i].name = examples[i].name;
-			cmds[i].bind = examples[i].bind;
-		}
-		else {
-			cmds[i].name = tal_fmt(cmds, "example-%d", (int)i);
-			cmds[i].bind = tal_fmt(cmds, "%c", (int)(c+i));
-		}
-		child = cmds[i].children = tal_arr(cmds, struct command, i % 2);
-		for (j = 0; j < tal_count(child); j++) {
-			child[j].name = "sayhi";
-			child[j].bind = tal_fmt(child, "%c", (int)(c+j));
-			child[j].children = NULL;
-		}
+	for (i = 0; i < LENGTH(examples); ++i) {
+		cmds[i].children = examples[i].children;
+		cmds[i].name = examples[i].name;
+		cmds[i].bind = examples[i].bind;
+		cmds[i].nchildren = examples[i].nchildren;
 	}
 
 	return cmds;
