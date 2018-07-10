@@ -18,7 +18,7 @@ static const char *separator = " → ";
 
 /* -fn option overrides fonts[0]; default X11 font or font set */
 static const char *fonts[] = {
-	"monospace:size=15"
+	"monospace:size=16"
 };
 
 #define scheme_bg "#222222"
