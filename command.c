@@ -24,7 +24,7 @@ command_exec(struct command *cmd) {
 
 int
 command_num_children(struct command *cmd) {
-	return tal_count(cmd) || cmd->nchildren;
+	return cmd->nchildren;
 }
 
 struct command *
@@ -41,19 +41,3 @@ command_lookup(struct command *cmd, int ncmds, const char *binding) {
 /*   { .bind = "d", .name = "emacs-dev", .nchildren = 0, .children = NULL }, */
 /* }; */
 
-struct command *
-test_root_commands(tal_t *ctx, const struct command *commands, int ncmds) {
-	int i;
-	struct command *cmds = NULL;
-
-	cmds = tal_arr(ctx, struct command, ncmds);
-
-	for (i = 0; i < ncmds; ++i) {
-		cmds[i].children = commands[i].children;
-		cmds[i].name = commands[i].name;
-		cmds[i].bind = commands[i].bind;
-		cmds[i].nchildren = commands[i].nchildren;
-	}
-
-	return cmds;
-}
