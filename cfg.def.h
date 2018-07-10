@@ -62,7 +62,26 @@ static struct command browser_commands[] = {
 	DEFCMD("k", "kill chrome", "pkill --oldest chromium")
 };
 
+static struct command bitcoin_commands[] = {
+	DEFCMD("p", "price", "n btc")
+};
+
+static struct command vm_commands[] = {
+	DEFCMD("p", "pause/resume", "vmtoggle")
+};
+
+static struct command system_commands[] = {
+	DEFCMD("S", "suspend", "suspend")
+	DEFCMD("s", "my suspend", "my-suspend")
+	DEFCMD("r", "reboot", "reboot")
+	DEFCMD("k", "kill session", "killsession")
+};
+
 static struct command commands[] = {
 	DEFPREFIX("b", "browsers", browser_commands)
+	DEFPREFIX("B", "bitcoin", bitcoin_commands)
+	DEFCMD("d", "date", "n mydate")
 	DEFCMD("e", "emacs", "emacs-dev")
+	DEFPREFIX("s", "system", system_commands)
+	DEFPREFIX("v", "vm commands", vm_commands)
 };
