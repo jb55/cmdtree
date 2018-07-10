@@ -55,11 +55,16 @@ static struct scheme schemes[SchemeLast] = {
 			.children = (cs),		\
 			},
 
+static struct command test_commands[] = {
+	DEFCMD("t", "test command", "echo ok")
+};
+
 static struct command browser_commands[] = {
 	DEFCMD("s", "chrome scaled", "chrome")
 	DEFCMD("c", "chromium", "chromium")
 	DEFCMD("f", "firefox", "firefox")
 	DEFCMD("k", "kill chrome", "pkill --oldest chromium")
+	DEFPREFIX("t", "test nested prefix", test_commands)
 };
 
 static struct command bitcoin_commands[] = {

@@ -20,3 +20,12 @@ Configuring cmdtree will be easy (not yet implemented, still WIP):
 
 Configuring cmdtree is currently not so easy, but you just need to tweak
 [cfg.def.h](cfg.def.h) to your liking before building.
+
+
+key bindings
+------------
+
+```
+ESC         quit
+Backspace   go up one level
+```

@@ -5,6 +5,7 @@ so we know what section we're in
 
 * TODO load config from file
 
+* TODO manpage
 * TODO column layout
 
 
