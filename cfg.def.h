@@ -39,23 +39,30 @@ static struct scheme schemes[SchemeLast] = {
 	                 },
 };
 
+#define DEFCMD(b, nme, cmd)			\
+	{ .bind = (b),				\
+			.name = (nme),		\
+			.command = (cmd),	\
+			.nchildren = 0,		\
+			.children = NULL,	\
+			},
+
+#define DEFPREFIX(b, nme, cs)				\
+	{ .bind = b,					\
+			.name = nme,			\
+			.command = 0,			\
+			.nchildren = LENGTH(cs),	\
+			.children = (cs),		\
+			},
+
 static struct command browser_commands[] = {
-	{ .bind = "s", .name = "chrome", .nchildren = 0, .children = NULL },
-	{ .bind = "c", .name = "chromium", .nchildren = 0, .children = NULL },
-	{ .bind = "f", .name = "firefox", .nchildren = 0, .children = NULL },
+	DEFCMD("s", "chrome scaled", "chrome")
+	DEFCMD("c", "chromium", "chromium")
+	DEFCMD("f", "firefox", "firefox")
+	DEFCMD("k", "kill chrome", "pkill --oldest chromium")
 };
 
 static struct command commands[] = {
-	{ .bind = "b",
-	  .name = "browsers",
-	  .nchildren = LENGTH(browser_commands),
-	  .children = browser_commands
-	},
-
-	{ .bind = "e",
-	  .name = "emacs",
-	  .command = "emacs-dev",
-	  .children = 0,
-	  .nchildren = 0
-	},
+	DEFPREFIX("b", "browsers", browser_commands)
+	DEFCMD("e", "emacs", "emacs-dev")
 };
