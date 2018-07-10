@@ -18,7 +18,7 @@ static const char *separator = " → ";
 
 /* -fn option overrides fonts[0]; default X11 font or font set */
 static const char *fonts[] = {
-	"monospace:size=14"
+	"monospace:size=15"
 };
 
 #define scheme_bg "#222222"
@@ -69,6 +69,7 @@ static struct command phone_commands[] = {
 
 static struct command email_commands[] = {
 	DEFCMD("f", "fetch", "systemctl --user restart home-email-notifier")
+	DEFCMD("s", "status", "n email-status-once")
 };
 
 static struct command vm_commands[] = {
