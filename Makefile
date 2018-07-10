@@ -31,7 +31,7 @@ $(BIN): $(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
 
 clean: fake
-	rm -f $(OBJS) $(BIN)
+	rm -f $(OBJS) $(BIN) *.d
 
 TAGS: fake
 	etags *.c

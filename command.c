@@ -1,10 +1,8 @@
 
 #include "command.h"
 
-#include "ccan/tal/tal.h"
-#include "ccan/tal/str/str.h"
-#include "ccan/str/str.h"
 #include <err.h>
+#include <string.h>
 #include <unistd.h>
 #include <stdio.h>
 
@@ -30,7 +28,7 @@ command_num_children(struct command *cmd) {
 struct command *
 command_lookup(struct command *cmd, int ncmds, const char *binding) {
 	for (int i = 0; i < ncmds; ++i) {
-		if (streq(binding, cmd[i].bind))
+		if (strcmp(binding, cmd[i].bind) == 0)
 			return &cmd[i];
 	}
 
