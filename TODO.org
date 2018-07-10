@@ -1,7 +1,22 @@
 
-* TODO command struct test data
-
 * TODO column layout
 
+
+
+* DONE redraw prefix with subtree
+CLOSED: [2018-07-09 Mon 17:26]
 * DONE vertical layout
 CLOSED: [2018-07-09 Mon 15:25]
+* DONE command struct test data
+CLOSED: [2018-07-09 Mon 17:10]
+* DONE draw command
+CLOSED: [2018-07-09 Mon 10:39]
+* DONE close window on escape
+CLOSED: [2018-07-08 Sun 12:20]
+* DONE popup window
+CLOSED: [2018-07-08 Sun 12:15]
+* DONE draw key as well
+CLOSED: [2018-07-09 Mon 14:30]
+* DONE command/bind different color
+CLOSED: [2018-07-09 Mon 14:30]
+

@@ -118,7 +118,6 @@ setup(Drw *drw)
 	XSelectInput(display, win, ExposureMask | KeyPressMask);
 	XMapWindow(display, win);
 
-
 	XSetInputFocus(display, win, RevertToParent, CurrentTime);
 
 	// XXXembed
@@ -133,7 +132,7 @@ setup(Drw *drw)
 	/* } */
 
 	/* drw_resize(drw, mw, mh); */
-	/* drawmenu(); */
+	/* draw_tree(drw); */
 }
 
 static int
@@ -145,8 +144,6 @@ draw_command(Drw *drw, int x, int y, struct command *cmd) {
 	int invert = 0;
 	int isprefix = 0;
 	char *name = cmd->name;
-	struct scheme *prefix = &schemes[SchemePrefix];
-	struct scheme *norm = &schemes[SchemeNorm];
 	struct scheme *scheme = NULL;
 
 	//drw_fontset_getwidth(drw, binding) + 1;
@@ -165,9 +162,9 @@ draw_command(Drw *drw, int x, int y, struct command *cmd) {
 	isprefix = command_is_prefix(cmd);
 
 	if (isprefix)
-		scheme = prefix;
+		scheme = &schemes[SchemePrefix];
 	else
-		scheme = norm;
+		scheme = &schemes[SchemeNorm];
 
 	drw_setscheme(drw, &scheme->name_clr, &scheme->bg_clr);
 
@@ -269,8 +266,10 @@ run(Drw *drw) {
 	KeySym ksym = NoSymbol;
 	Status status;
 	int code = 0;
+	struct command *cmd = NULL;
 
 	while (!done) {
+		cmd = NULL;
 		XNextEvent(display, &e);
 		switch (e.type) {
 		case Expose:
@@ -279,10 +278,24 @@ run(Drw *drw) {
 		case KeyPress:
 			XmbLookupString(xic, (XKeyEvent*)&e, buf, sizeof buf,
 					&ksym, &status);
-			if (ksym == XK_q || ksym == XK_Escape) {
+
+			if (ksym == XK_Escape) {
 				code = 1;
 				done = 1;
+				break;
 			}
+
+			cmd = command_lookup(rootcmds, buf);
+
+			if (cmd) {
+				if (command_is_prefix(cmd)) {
+					rootcmds = cmd->children;
+					draw_tree(drw, 0, 0, mw, mh);
+				}
+				else // TODO: launch command
+					done = 1;
+			}
+
 			break;
 		}
 	}

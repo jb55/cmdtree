@@ -3,6 +3,7 @@
 
 #include "ccan/tal/tal.h"
 #include "ccan/tal/str/str.h"
+#include "ccan/str/str.h"
 
 #include "util.h"
 
@@ -15,6 +16,18 @@ int
 command_is_prefix(struct command *cmd) {
 	size_t count = tal_count(cmd->children);
 	return count > 0;
+}
+
+
+struct command *
+command_lookup(struct command *cmd, const char *binding) {
+	size_t len = tal_count(cmd);
+	for (size_t i = 0; i < len; ++i) {
+		if (streq(binding, cmd[i].bind))
+			return &cmd[i];
+	}
+
+	return NULL;
 }
 
 static const struct command examples[] = {

@@ -11,7 +11,7 @@ enum position {
 static int xpad = 6;
 static int ypad = 2;
 
-static enum position position = POSITION_RIGHT;                      /* -b  option; if 0, dmenu appears at bottom     */
+static enum position position = POSITION_TOP;                      /* -b  option; if 0, dmenu appears at bottom     */
 
 
 static const char *separator = " → ";

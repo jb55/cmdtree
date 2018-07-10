@@ -15,6 +15,9 @@ struct command {
 void
 command_init(struct command *cmd);
 
+struct command *
+command_lookup(struct command *cmd, const char *binding);
+
 int
 command_is_prefix(struct command *cmd);
 
