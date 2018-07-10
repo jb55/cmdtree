@@ -11,7 +11,7 @@ enum position {
 static int xpad = 6;
 static int ypad = 2;
 
-static enum position position = POSITION_TOP;                      /* -b  option; if 0, dmenu appears at bottom     */
+static enum position position = POSITION_TOP;
 
 
 static const char *separator = " → ";
@@ -20,7 +20,6 @@ static const char *separator = " → ";
 static const char *fonts[] = {
 	"monospace:size=14"
 };
-/* static const char *prompt      = NULL;      /\* -p  option; prompt to the left of input field *\/ */
 
 #define scheme_bg "#222222"
 
