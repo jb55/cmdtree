@@ -6,6 +6,7 @@
 
 struct command {
 	char *name;
+	char *command;
 	char *bind;
 	struct command *children;
 	int nchildren;

@@ -45,7 +45,7 @@ static struct command browser_commands[] = {
 	{ .bind = "f", .name = "firefox", .nchildren = 0, .children = NULL },
 };
 
-static const struct command commands[] = {
+static struct command commands[] = {
 	{ .bind = "b",
 	  .name = "browsers",
 	  .nchildren = LENGTH(browser_commands),
@@ -53,8 +53,9 @@ static const struct command commands[] = {
 	},
 
 	{ .bind = "e",
-	  .name = "emacs-dev",
-	  .children = NULL,
+	  .name = "emacs",
+	  .command = "emacs-dev",
+	  .children = 0,
 	  .nchildren = 0
 	},
 };

@@ -41,7 +41,6 @@ static XIC xic;
 
 #include "cfg.h"
 
-
 static int
 cmdstack_push_(struct command *children, int nchildren) {
 	if (cmdstack_ptr + 1 >= CMDSTACK_SIZE)
