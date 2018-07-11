@@ -67,9 +67,15 @@ static struct command phone_commands[] = {
 	DEFPREFIX("m", "music", phone_music_commands)
 };
 
+static struct command email_notifications[] = {
+	DEFCMD("1", "on", "nostat +h && n echo email notifications on")
+	DEFCMD("0", "off", "nostat -h && n echo email notifications off")
+};
+
 static struct command email_commands[] = {
 	DEFCMD("f", "fetch", "systemctl --user restart home-email-notifier")
 	DEFCMD("s", "status", "n email-status-once")
+	DEFPREFIX("n", "notifications", email_notifications)
 };
 
 static struct command vm_commands[] = {
@@ -100,6 +106,7 @@ static struct command theme_commands[] = {
 static struct command app_commands[] = {
 	DEFCMD("e", "emacs", "emacs-dev")
 	DEFCMD("s", "signal", "signal-desktop")
+	DEFCMD("S", "skype", "skypeforlinux")
 };
 
 static struct command commands[] = {
