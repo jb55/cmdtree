@@ -92,6 +92,11 @@ static struct command system_commands[] = {
 	DEFCMD("i", "init user session", "initx")
 };
 
+static struct command theme_commands[] = {
+	DEFCMD("d", "dark", "themeswitch dark")
+	DEFCMD("l", "light", "themeswitch light")
+};
+
 static struct command commands[] = {
 	DEFPREFIX("b", "browsers", browser_commands)
 	DEFPREFIX("B", "bitcoin", bitcoin_commands)
@@ -104,5 +109,6 @@ static struct command commands[] = {
 	DEFCMD("l", "lock", "slock")
 	DEFPREFIX("S", "sync", sync_commands)
 	DEFPREFIX("s", "system", system_commands)
+	DEFPREFIX("t", "theme", theme_commands)
 	DEFPREFIX("v", "vm", vm_commands)
 };
