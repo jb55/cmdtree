@@ -97,12 +97,17 @@ static struct command theme_commands[] = {
 	DEFCMD("l", "light", "themeswitch light")
 };
 
+static struct command app_commands[] = {
+	DEFCMD("e", "emacs", "emacs-dev")
+	DEFCMD("s", "signal", "signal-desktop")
+};
+
 static struct command commands[] = {
+	DEFPREFIX("a", "apps", app_commands)
 	DEFPREFIX("b", "browsers", browser_commands)
 	DEFPREFIX("B", "bitcoin", bitcoin_commands)
 	DEFPREFIX("c", "chromecast", chromecast_commands)
 	DEFCMD("d", "date", "n mydate")
-	DEFCMD("e", "emacs", "emacs-dev")
 	DEFPREFIX("n", "notmuch", email_commands)
 	DEFPREFIX("P", "phone", phone_commands)
 	DEFCMD("p", "power", "n acpi")
