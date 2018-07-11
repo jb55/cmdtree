@@ -74,9 +74,17 @@ static struct command email_commands[] = {
 
 static struct command vm_commands[] = {
 	DEFCMD("p", "pause/resume", "vmtoggle")
+	DEFCMD("v", "virtualbox", "VirtualBox")
+};
+
+
+static struct command sync_commands[] = {
+	DEFCMD("t", "quiver -> monad", "n sync-todo quiver monad")
+	DEFCMD("f", "monad -> quiver", "n sync-todo monad quiver")
 };
 
 static struct command system_commands[] = {
+	DEFCMD("b", "bright", "bright")
 	DEFCMD("S", "suspend", "suspend")
 	DEFCMD("s", "my suspend", "my-suspend")
 	DEFCMD("r", "reboot", "reboot")
@@ -93,6 +101,8 @@ static struct command commands[] = {
 	DEFPREFIX("n", "notmuch", email_commands)
 	DEFPREFIX("P", "phone", phone_commands)
 	DEFCMD("p", "power", "n acpi")
+	DEFCMD("l", "lock", "slock")
+	DEFPREFIX("S", "sync", sync_commands)
 	DEFPREFIX("s", "system", system_commands)
 	DEFPREFIX("v", "vm", vm_commands)
 };
