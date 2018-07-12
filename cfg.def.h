@@ -89,6 +89,12 @@ static struct command sync_commands[] = {
 	DEFCMD("f", "monad -> quiver", "n sync-todo monad quiver")
 };
 
+static struct command window_commands[] = {
+	DEFCMD("c", "colorpick", "colorpick")
+	DEFCMD("s", "snap", "snap")
+	DEFCMD("S", "snap selection", "sleep 0.2; snap -s")
+};
+
 static struct command system_commands[] = {
 	DEFCMD("b", "bright", "bright")
 	DEFCMD("S", "suspend", "suspend")
@@ -96,6 +102,7 @@ static struct command system_commands[] = {
 	DEFCMD("r", "reboot", "reboot")
 	DEFCMD("k", "kill session", "killsession")
 	DEFCMD("i", "init user session", "initx")
+	DEFPREFIX("w", "window", window_commands)
 };
 
 static struct command theme_commands[] = {
