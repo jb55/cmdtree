@@ -97,6 +97,7 @@ static struct command window_commands[] = {
 
 static struct command system_commands[] = {
 	DEFCMD("b", "bright", "bright")
+	DEFPREFIX("c", "copy/sync", sync_commands)
 	DEFCMD("S", "suspend", "suspend")
 	DEFCMD("s", "my suspend", "my-suspend")
 	DEFCMD("r", "reboot", "reboot")
@@ -116,17 +117,27 @@ static struct command app_commands[] = {
 	DEFCMD("S", "skype", "skypeforlinux")
 };
 
+static struct command media_commands[] = {
+	DEFCMD("l", "next", "media-next")
+	DEFCMD("h", "prev", "media-prev")
+	DEFCMD("s", "stop", "media-stop")
+	DEFCMD("=", "vol+", "amixer sset Master 10%+")
+	DEFCMD("-", "vol-", "amixer sset Master 10%-")
+	DEFCMD("p", "play/pause", "media-playpause")
+};
+
+
 static struct command commands[] = {
 	DEFPREFIX("a", "apps", app_commands)
 	DEFPREFIX("b", "browsers", browser_commands)
 	DEFPREFIX("B", "bitcoin", bitcoin_commands)
 	DEFPREFIX("c", "chromecast", chromecast_commands)
 	DEFCMD("d", "date", "n mydate")
-	DEFPREFIX("n", "notmuch", email_commands)
+	DEFPREFIX("e", "email", email_commands)
+	DEFPREFIX("m", "media", media_commands)
 	DEFPREFIX("P", "phone", phone_commands)
 	DEFCMD("p", "power", "n acpi")
 	DEFCMD("l", "lock", "slock")
-	DEFPREFIX("S", "sync", sync_commands)
 	DEFPREFIX("s", "system", system_commands)
 	DEFPREFIX("t", "theme", theme_commands)
 	DEFPREFIX("v", "vm", vm_commands)
