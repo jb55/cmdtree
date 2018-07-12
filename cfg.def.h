@@ -41,7 +41,6 @@ static struct scheme schemes[SchemeLast] = {
 
 static struct command browser_commands[] = {
 	DEFCMD("c", "chrome", "chrome")
-	DEFCMD("C", "calendar", "chrome --app=https://calendar.google.com")
 	DEFCMD("f", "firefox", "firefox")
 	DEFCMD("k", "kill chrome", "pkill --oldest chromium")
 };
@@ -114,6 +113,7 @@ static struct command theme_commands[] = {
 };
 
 static struct command app_commands[] = {
+	DEFCMD("c", "calendar", "chrome --app=https://calendar.google.com")
 	DEFCMD("e", "emacs", "emacs-dev")
 	DEFCMD("s", "signal", "signal-desktop")
 	DEFCMD("S", "skype", "skypeforlinux")
