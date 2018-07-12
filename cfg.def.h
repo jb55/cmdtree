@@ -119,13 +119,20 @@ static struct command app_commands[] = {
 	DEFCMD("S", "skype", "skypeforlinux")
 };
 
+static struct command spotify_commands[] = {
+	DEFCMD("l", "next", "spotify-next")
+	DEFCMD("h", "prev", "spotify-prev")
+	DEFCMD("p", "play/pause", "spotify-playpause")
+};
+
+
 static struct command media_commands[] = {
-	DEFCMD("l", "next", "media-next")
-	DEFCMD("h", "prev", "media-prev")
-	DEFCMD("s", "stop", "media-stop")
+	DEFCMD("l", "next", "xdotool key XF86AudioNext")
+	DEFCMD("h", "prev", "xdotool key XF86AudioPrev")
+	DEFCMD("p", "play/pause", "xdotool key XF86AudioPlay")
+	DEFPREFIX("s", "spotify", spotify_commands)
 	DEFCMD("=", "vol+", "amixer sset Master 10%+")
 	DEFCMD("-", "vol-", "amixer sset Master 10%-")
-	DEFCMD("p", "play/pause", "media-playpause")
 };
 
 
