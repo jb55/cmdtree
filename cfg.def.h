@@ -40,8 +40,8 @@ static struct scheme schemes[SchemeLast] = {
 };
 
 static struct command browser_commands[] = {
-	DEFCMD("s", "chrome scaled", "chrome")
-	DEFCMD("c", "chromium", "chromium")
+	DEFCMD("c", "chrome", "chrome")
+	DEFCMD("C", "calendar", "chrome calendar.google.com")
 	DEFCMD("f", "firefox", "firefox")
 	DEFCMD("k", "kill chrome", "pkill --oldest chromium")
 };
