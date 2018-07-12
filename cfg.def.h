@@ -63,6 +63,8 @@ static struct command phone_music_commands[] = {
 
 static struct command phone_commands[] = {
 	DEFCMD("b", "battery", "n phone-batt")
+	DEFCMD("r", "ring", "n phonectl ring:100")
+	DEFCMD("s", "stop ring", "n phonectl ring:stop")
 	DEFCMD("c", "copy clipboard", "phone-clipboard | xclip")
 	DEFPREFIX("m", "music", phone_music_commands)
 };
