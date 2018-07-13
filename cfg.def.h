@@ -71,6 +71,7 @@ static struct command phone_commands[] = {
 static struct command email_notifications[] = {
 	DEFCMD("1", "on", "nostat +h && n echo email notifications on")
 	DEFCMD("0", "off", "nostat -h && n echo email notifications off")
+	DEFCMD("n", "status", "n nostat")
 };
 
 static struct command email_commands[] = {
@@ -147,6 +148,7 @@ static struct command commands[] = {
 	DEFPREFIX("P", "phone", phone_commands)
 	DEFCMD("p", "power", "n acpi")
 	DEFCMD("l", "lock", "slock")
+	DEFCMD("u", "clip", "dclip")
 	DEFPREFIX("s", "system", system_commands)
 	DEFPREFIX("t", "theme", theme_commands)
 	DEFPREFIX("v", "vm", vm_commands)
