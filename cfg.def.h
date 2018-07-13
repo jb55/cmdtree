@@ -127,9 +127,9 @@ static struct command spotify_commands[] = {
 
 
 static struct command media_commands[] = {
-	DEFCMD("l", "next", "xdotool key XF86AudioNext")
-	DEFCMD("h", "prev", "xdotool key XF86AudioPrev")
-	DEFCMD("p", "play/pause", "xdotool key XF86AudioPlay")
+	DEFCMD("n", "next", "xdotool key XF86AudioNext")
+	DEFCMD("p", "prev", "xdotool key XF86AudioPrev")
+	DEFCMD(" ", "play/pause", "xdotool key XF86AudioPlay")
 	DEFPREFIX("s", "spotify", spotify_commands)
 	DEFCMD("=", "vol+", "amixer sset Master 10%+")
 	DEFCMD("-", "vol-", "amixer sset Master 10%-")
