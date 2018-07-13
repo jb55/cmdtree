@@ -186,6 +186,14 @@ setup(Drw *drw)
 	/* draw_tree(drw); */
 }
 
+static const char *
+bind_name(const char *bind) {
+	switch (*bind) {
+	case ' ': return "SPC";
+	default:  return bind;
+	}
+}
+
 static int
 draw_command(Drw *drw, int x, int y, struct command *cmd) {
 	char buf[256];
@@ -202,8 +210,10 @@ draw_command(Drw *drw, int x, int y, struct command *cmd) {
 	drw_setscheme(drw, &schemes[SchemeNorm].bind_clr,
 		      &schemes[SchemeNorm].bg_clr);
 
-	w = drw_fontset_getwidth(drw, cmd->bind);
-	x = drw_text(drw, x+pad, y, w, bh, lpad, cmd->bind, invert);
+	const char *bindname = bind_name(cmd->bind);
+
+	w = drw_fontset_getwidth(drw, bindname);
+	x = drw_text(drw, x+pad, y, w, bh, lpad, bindname, invert);
 
 	w = sep_width;
 	drw_setscheme(drw, &schemes[SchemeNorm].arrow_clr,

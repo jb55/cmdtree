@@ -8,6 +8,13 @@
 
 #include "util.h"
 
+static const char *
+bind_name_to_bind(const char *bind) {
+	if (strcmp(bind, "STR") == 0)
+		return " ";
+	return bind;
+}
+
 int
 command_is_prefix(struct command *cmd) {
 	return cmd->nchildren > 0;
@@ -28,7 +35,7 @@ command_num_children(struct command *cmd) {
 struct command *
 command_lookup(struct command *cmd, int ncmds, const char *binding) {
 	for (int i = 0; i < ncmds; ++i) {
-		if (strcmp(binding, cmd[i].bind) == 0)
+		if (strcmp(binding, bind_name_to_bind(cmd[i].bind)) == 0)
 			return &cmd[i];
 	}
 
