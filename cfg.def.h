@@ -93,8 +93,8 @@ static struct command sync_commands[] = {
 
 static struct command window_commands[] = {
 	DEFCMD("c", "colorpick", "colorpick")
-	DEFCMD("s", "snap", "snap")
-	DEFCMD("S", "snap selection", "sleep 0.2; snap -s")
+	DEFCMD("S", "snap", "snap")
+	DEFCMD("s", "snap selection", "sleep 0.2; snap -s")
 };
 
 static struct command system_commands[] = {
@@ -105,7 +105,6 @@ static struct command system_commands[] = {
 	DEFCMD("r", "reboot", "reboot")
 	DEFCMD("k", "kill session", "killsession")
 	DEFCMD("i", "init user session", "initx")
-	DEFPREFIX("w", "window", window_commands)
 };
 
 static struct command theme_commands[] = {
@@ -128,6 +127,7 @@ static struct command spotify_commands[] = {
 
 
 static struct command media_commands[] = {
+	DEFPREFIX("c", "chromecast", chromecast_commands)
 	DEFCMD("n", "next", "xdotool key XF86AudioNext")
 	DEFCMD("p", "prev", "xdotool key XF86AudioPrev")
 	DEFCMD(" ", "play/pause", "xdotool key XF86AudioPlay")
@@ -141,7 +141,6 @@ static struct command commands[] = {
 	DEFPREFIX("a", "apps", app_commands)
 	DEFPREFIX("b", "browsers", browser_commands)
 	DEFPREFIX("B", "bitcoin", bitcoin_commands)
-	DEFPREFIX("c", "chromecast", chromecast_commands)
 	DEFCMD("d", "date", "n mydate")
 	DEFPREFIX("e", "email", email_commands)
 	DEFPREFIX("m", "media", media_commands)
@@ -150,6 +149,7 @@ static struct command commands[] = {
 	DEFCMD("l", "lock", "slock")
 	DEFCMD("u", "clip", "dclip")
 	DEFPREFIX("s", "system", system_commands)
+	DEFPREFIX("w", "window", window_commands)
 	DEFPREFIX("t", "theme", theme_commands)
 	DEFPREFIX("v", "vm", vm_commands)
 };
