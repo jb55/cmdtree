@@ -117,6 +117,8 @@ static struct command app_commands[] = {
 	DEFCMD("e", "emacs", "emacs-dev")
 	DEFCMD("s", "signal", "signal-desktop")
 	DEFCMD("S", "skype", "skypeforlinux")
+	DEFCMD("t", "tweet", "dmenup tweet tweet")
+	DEFCMD("q", "qalc", "dmenupn calc qalc -t")
 };
 
 static struct command spotify_commands[] = {
