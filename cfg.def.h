@@ -82,6 +82,7 @@ static struct command email_commands[] = {
 
 static struct command vm_commands[] = {
 	DEFCMD("p", "pause/resume", "vmtoggle")
+	DEFCMD("c", "close", "vmclose")
 	DEFCMD("v", "virtualbox", "VirtualBox")
 };
 
