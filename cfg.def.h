@@ -92,10 +92,16 @@ static struct command sync_commands[] = {
 	DEFCMD("f", "monad -> quiver", "n sync-todo monad quiver")
 };
 
+static struct command theme_commands[] = {
+	DEFCMD("d", "dark", "themeswitch dark")
+	DEFCMD("l", "light", "themeswitch light")
+};
+
 static struct command window_commands[] = {
 	DEFCMD("c", "colorpick", "colorpick")
 	DEFCMD("S", "snap", "snap")
 	DEFCMD("s", "snap selection", "sleep 0.2; snap -s")
+	DEFPREFIX("t", "theme", theme_commands)
 };
 
 static struct command system_commands[] = {
@@ -106,11 +112,6 @@ static struct command system_commands[] = {
 	DEFCMD("r", "reboot", "reboot")
 	DEFCMD("k", "kill session", "killsession")
 	DEFCMD("i", "init user session", "initx")
-};
-
-static struct command theme_commands[] = {
-	DEFCMD("d", "dark", "themeswitch dark")
-	DEFCMD("l", "light", "themeswitch light")
 };
 
 static struct command app_commands[] = {
@@ -153,6 +154,5 @@ static struct command commands[] = {
 	DEFCMD("u", "clip", "dclip")
 	DEFPREFIX("s", "system", system_commands)
 	DEFPREFIX("w", "window", window_commands)
-	DEFPREFIX("t", "theme", theme_commands)
 	DEFPREFIX("v", "vm", vm_commands)
 };
