@@ -98,6 +98,7 @@ static struct command theme_commands[] = {
 };
 
 static struct command window_commands[] = {
+	DEFCMD("b", "bright", "bright")
 	DEFCMD("c", "colorpick", "colorpick")
 	DEFCMD("S", "snap", "snap")
 	DEFCMD("s", "snap selection", "sleep 0.2; snap -s")
@@ -105,7 +106,6 @@ static struct command window_commands[] = {
 };
 
 static struct command system_commands[] = {
-	DEFCMD("b", "bright", "bright")
 	DEFPREFIX("c", "copy/sync", sync_commands)
 	DEFCMD("S", "suspend", "suspend")
 	DEFCMD("s", "my suspend", "my-suspend")
