@@ -115,7 +115,8 @@ static struct command system_commands[] = {
 };
 
 static struct command app_commands[] = {
-	DEFCMD("c", "calendar", "chrome --app=https://calendar.google.com")
+	DEFPREFIX("c", "chrome", browser_commands)
+	DEFCMD("C", "calendar", "chrome --app=https://calendar.google.com")
 	DEFCMD("e", "emacs", "emacs-dev")
 	DEFCMD("s", "signal", "signal-desktop")
 	DEFCMD("S", "skype", "skypeforlinux")
@@ -143,7 +144,6 @@ static struct command media_commands[] = {
 
 static struct command commands[] = {
 	DEFPREFIX("a", "apps", app_commands)
-	DEFPREFIX("b", "browsers", browser_commands)
 	DEFPREFIX("B", "bitcoin", bitcoin_commands)
 	DEFCMD("d", "date", "n mydate")
 	DEFPREFIX("e", "email", email_commands)
