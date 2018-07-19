@@ -60,11 +60,16 @@ static struct command phone_music_commands[] = {
 	DEFCMD("d", "volume down", "phonectl music:down")
 };
 
+static struct command phone_clipboard[] = {
+	DEFCMD("f", "from phone", "phone-clipboard | xclip && xclip -o | xargs notify-send")
+	DEFCMD("t", "to phone", "xclip -o | xargs phone-clipboard")
+};
+
 static struct command phone_commands[] = {
 	DEFCMD("b", "battery", "n phone-batt")
+	DEFPREFIX("c", "clipboard", phone_clipboard)
 	DEFCMD("r", "ring", "n phonectl ring:100")
 	DEFCMD("s", "stop ring", "n phonectl ring:stop")
-	DEFCMD("c", "copy clipboard", "phone-clipboard | xclip")
 	DEFPREFIX("m", "music", phone_music_commands)
 };
 
@@ -144,12 +149,12 @@ static struct command media_commands[] = {
 
 static struct command commands[] = {
 	DEFPREFIX("a", "apps", app_commands)
+	DEFCMD("b", "battery", "n acpi")
 	DEFPREFIX("B", "bitcoin", bitcoin_commands)
 	DEFCMD("d", "date", "n mydate")
 	DEFPREFIX("e", "email", email_commands)
 	DEFPREFIX("m", "media", media_commands)
-	DEFPREFIX("P", "phone", phone_commands)
-	DEFCMD("p", "power", "n acpi")
+	DEFPREFIX("p", "phone", phone_commands)
 	DEFCMD("l", "lock", "slock")
 	DEFCMD("u", "clip", "dclip")
 	DEFPREFIX("s", "system", system_commands)
