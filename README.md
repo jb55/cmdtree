@@ -23,7 +23,7 @@ First customize [cfg.def.h](cfg.def.h) to include your menu items.
 
 libX11 and libXft are required. Once you have those installed, simply type:
 
-    make && make install || sudo make install
+    make && make install
 
 To launch `cmdtree` with a key binding, use something like
 [xbindkeys](https://wiki.archlinux.org/index.php/Xbindkeys)
