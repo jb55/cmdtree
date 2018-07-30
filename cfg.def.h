@@ -119,6 +119,10 @@ static struct command system_commands[] = {
 	DEFCMD("i", "init user session", "initx")
 };
 
+static struct command dev_commands[] = {
+	DEFCMD("l", "lightning issue", "xclip -o | head -n1 | xargs lissue")
+};
+
 static struct command app_commands[] = {
 	DEFPREFIX("c", "chrome", browser_commands)
 	DEFCMD("C", "calendar", "chrome --app=https://calendar.google.com")
@@ -149,16 +153,17 @@ static struct command media_commands[] = {
 
 
 static struct command commands[] = {
-	DEFPREFIX("a", "apps", app_commands)
-	DEFCMD("b", "battery", "n acpi")
 	DEFPREFIX("B", "bitcoin", bitcoin_commands)
-	DEFCMD("d", "date", "n mydate")
+	DEFPREFIX("a", "apps", app_commands)
 	DEFPREFIX("e", "email", email_commands)
+	DEFPREFIX("g", "dev", dev_commands)
 	DEFPREFIX("m", "media", media_commands)
 	DEFPREFIX("p", "phone", phone_commands)
+	DEFPREFIX("s", "system", system_commands)
+	DEFPREFIX("v", "vm", vm_commands)
+	DEFPREFIX("w", "window", window_commands)
+	DEFCMD("b", "battery", "n acpi")
+	DEFCMD("d", "date", "n mydate")
 	DEFCMD("l", "lock", "slock")
 	DEFCMD("u", "clip", "dclip")
-	DEFPREFIX("s", "system", system_commands)
-	DEFPREFIX("w", "window", window_commands)
-	DEFPREFIX("v", "vm", vm_commands)
 };
