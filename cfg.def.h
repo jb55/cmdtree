@@ -56,8 +56,8 @@ static struct command chromecast_commands[] = {
 
 static struct command phone_music_commands[] = {
 	DEFCMD("p", "play/pause", "phonectl music:playpause")
-	DEFCMD("u", "volume up", "phonectl music:up")
-	DEFCMD("d", "volume down", "phonectl music:down")
+	DEFCMD("=", "volume up", "phonectl music:up")
+	DEFCMD("-", "volume down", "phonectl music:down")
 };
 
 static struct command phone_clipboard[] = {
