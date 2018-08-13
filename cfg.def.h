@@ -138,6 +138,7 @@ static struct command spotify_commands[] = {
 
 static struct command media_commands[] = {
 	DEFPREFIX("c", "chromecast", chromecast_commands)
+	DEFCMD("b", "connect-bose", "connect-bose")
 	DEFCMD("n", "next", "xdotool key XF86AudioNext")
 	DEFCMD("p", "prev", "xdotool key XF86AudioPrev")
 	DEFCMD(" ", "play/pause", "xdotool key XF86AudioPlay")
