@@ -124,7 +124,7 @@ static struct command dev_commands[] = {
 
 static struct command app_commands[] = {
 	DEFPREFIX("c", "browser", browser_commands)
-	DEFCMD("C", "calendar", "chrome --app=https://calendar.google.com")
+	DEFCMD("C", "calendar", "qutebrowser --target window https://calendar.google.com")
 	DEFCMD("e", "emacs", "emacs-dev")
 	DEFCMD("s", "signal", "signal-desktop")
 	DEFCMD("S", "skype", "skypeforlinux")
