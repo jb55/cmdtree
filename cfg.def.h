@@ -124,8 +124,8 @@ static struct command dev_commands[] = {
 
 static struct command app_commands[] = {
 	DEFPREFIX("c", "browser", browser_commands)
-	DEFCMD("e", "edit", "edit")
 	DEFCMD("C", "calendar", "/home/jb55/src/c/viscal/sync")
+	DEFCMD("e", "edit", "edit")
 	DEFCMD("s", "signal", "signal-desktop")
 	DEFCMD("S", "skype", "skypeforlinux")
 	DEFCMD("t", "tweet", "dmenup tweet tweet")
