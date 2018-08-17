@@ -40,7 +40,7 @@ static struct scheme schemes[SchemeLast] = {
 };
 
 static struct command browser_commands[] = {
-	DEFCMD("c", "qutebrowser", "qutebrowser")
+	DEFCMD("c", "qutebrowser", "qbrowser")
 	DEFCMD("f", "firefox", "firefox")
 };
 
@@ -124,8 +124,8 @@ static struct command dev_commands[] = {
 
 static struct command app_commands[] = {
 	DEFPREFIX("c", "browser", browser_commands)
-	DEFCMD("C", "calendar", "qutebrowser --target window https://calendar.google.com")
 	DEFCMD("e", "edit", "edit")
+	DEFCMD("C", "calendar", "/home/jb55/src/c/viscal/sync")
 	DEFCMD("s", "signal", "signal-desktop")
 	DEFCMD("S", "skype", "skypeforlinux")
 	DEFCMD("t", "tweet", "dmenup tweet tweet")
