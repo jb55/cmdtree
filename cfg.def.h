@@ -80,6 +80,7 @@ static struct command email_notifications[] = {
 
 static struct command email_commands[] = {
 	DEFCMD("f", "fetch", "systemctl --user restart home-email-notifier")
+	DEFCMD("m", "sync monad", "muchsync monad-local")
 	DEFCMD("s", "status", "n email-status-once")
 	DEFPREFIX("n", "notifications", email_notifications)
 };
