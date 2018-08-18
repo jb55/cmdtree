@@ -80,7 +80,7 @@ static struct command email_notifications[] = {
 
 static struct command email_commands[] = {
 	DEFCMD("f", "fetch", "systemctl --user restart home-email-notifier")
-	DEFCMD("m", "sync monad", "muchsync monad-local")
+	DEFCMD("m", "sync monad", "n muchsync monad")
 	DEFCMD("s", "status", "n email-status-once")
 	DEFPREFIX("n", "notifications", email_notifications)
 };
@@ -117,6 +117,7 @@ static struct command system_commands[] = {
 	DEFCMD("r", "reboot", "reboot")
 	DEFCMD("k", "kill session", "killsession")
 	DEFCMD("i", "init user session", "initx")
+	DEFCMD("x", "restart xbindkeys", "pkill xbindkeys && xbindkeys")
 };
 
 static struct command dev_commands[] = {
