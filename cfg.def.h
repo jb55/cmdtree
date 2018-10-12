@@ -40,7 +40,7 @@ static struct scheme schemes[SchemeLast] = {
 };
 
 static struct command browser_commands[] = {
-	DEFCMD("c", "qutebrowser", "qbrowser")
+	DEFCMD("b", "qutebrowser", "qbrowser")
 	DEFCMD("f", "firefox", "firefox")
 };
 
@@ -124,9 +124,14 @@ static struct command dev_commands[] = {
 	DEFCMD("l", "lightning issue", "xclip -o | head -n1 | xargs lissue")
 };
 
+static struct command calendar_commands[] = {
+	DEFCMD("c", "viscal", "/home/jb55/src/c/viscal/viscal /tmp/viscal/*.ics")
+	DEFCMD("s", "viscal-sync", "/home/jb55/src/c/viscal/sync")
+};
+
 static struct command app_commands[] = {
-	DEFPREFIX("c", "browser", browser_commands)
-	DEFCMD("C", "calendar", "/home/jb55/src/c/viscal/sync")
+	DEFPREFIX("b", "browser", browser_commands)
+	DEFPREFIX("c", "calendar", calendar_commands)
 	DEFCMD("e", "edit", "edit")
 	DEFCMD("s", "signal", "signal-desktop")
 	DEFCMD("S", "skype", "skypeforlinux")
