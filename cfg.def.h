@@ -171,6 +171,7 @@ static struct command commands[] = {
 	DEFPREFIX("w", "window", window_commands)
 	DEFCMD("b", "battery", "n acpi")
 	DEFCMD("d", "date", "n mydate")
+	DEFCMD("D", "utc", "n mydate -u")
 	DEFCMD("l", "lock", "slock")
 	DEFCMD("u", "clip", "dclip")
 };
