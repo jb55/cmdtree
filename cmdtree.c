@@ -299,7 +299,7 @@ draw_tree(Drw *drw, int x, int y, int w, int h) {
 static void
 cleanup(Drw *drw, int code) {
 	drw_free(drw);
-	exit(0);
+	exit(code);
 }
 
 static void
