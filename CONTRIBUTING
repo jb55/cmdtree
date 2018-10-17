@@ -1,0 +1,50 @@
+
+Reporting bugs
+==============
+
+Please submit bugs to our issue tracker here:
+
+    https://todo.sr.ht/~jb55/cmdtree
+
+You can also send questions to the public mailing list:
+
+    To: ~jb55/public-inbox@lists.sr.ht
+    Subject: [cmdtree] <question>
+
+
+Contributing code
+=================
+
+Feel free to email patches to:
+
+    ~jb55/public-inbox@lists.sr.ht
+
+Use git-format-patch and git-send-email.
+
+
+Getting started
+---------------
+
+replace <branch> with your branch:
+
+    mkdir -p patches/<branch>
+
+    git config format.subjectPrefix 'PATCH cmdtree'
+
+
+Sending a patch
+---------------
+
+replace <branch> with your branch
+
+
+    git format-patch --output-directory=patches/<branch> \
+                      --cover-letter \    # (optional)
+                      <branch>^
+
+    $EDITOR 0000-cover-letter.patch      # (optional)
+
+    git send-email --to="~jb55/public-inbox@lists.sr.ht" \
+                   patches/<branch>/*.patch
+
+
