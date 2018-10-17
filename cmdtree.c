@@ -161,29 +161,12 @@ setup(Drw *drw)
 
 	// what do?
 	XMapRaised(display, win);
-	XSetInputFocus(display, win, RevertToParent, CurrentTime);
 
 	xim = XOpenIM(display, NULL, NULL, NULL);
 	xic = XCreateIC(xim, XNInputStyle, XIMPreeditNothing | XIMStatusNothing,
 			XNClientWindow, win, XNFocusWindow, win, NULL);
 	XSelectInput(display, win, ExposureMask | KeyPressMask);
 	XMapWindow(display, win);
-
-	XSetInputFocus(display, win, RevertToParent, CurrentTime);
-
-	// XXXembed
-	/* if (embed) { */
-	/* 	XSelectInput(dpy, parentwin, FocusChangeMask); */
-	/* 	if (XQueryTree(dpy, parentwin, &dw, &w, &dws, &du) && dws) { */
-	/* 		for (i = 0; i < du && dws[i] != win; ++i) */
-	/* 			XSelectInput(dpy, dws[i], FocusChangeMask); */
-	/* 		XFree(dws); */
-	/* 	} */
-	/* 	grabfocus(); */
-	/* } */
-
-	/* drw_resize(drw, mw, mh); */
-	/* draw_tree(drw); */
 }
 
 static const char *
@@ -199,7 +182,7 @@ draw_command(Drw *drw, int x, int y, struct command *cmd) {
 	char buf[256];
 	int lpad = 0;
 	int pad = 0;
-	unsigned int w = 50;
+	unsigned int w;
 	int invert = 0;
 	int isprefix = 0;
 	char *name = cmd->name;
@@ -269,33 +252,6 @@ draw_tree_vertical(Drw *drw, struct command *cmds, int ncmds, int x, int y, int 
 	}
 }
 
-/* static void */
-/* draw_tree_horizontal(Drw *drw, struct command *cmds, int x, int y, int w, int h) { */
-/* 	int i, dx = x, dy = y; */
-
-/* 	drw_setscheme(drw, &schemes[SchemeNorm].bg_clr, */
-/* 		      &schemes[SchemeNorm].bg_clr); */
-/* 	drw_rect(drw, 0, 0, w, h, 1, 1); */
-
-/* 	int c = '0'; */
-/* 	for (i = 0; i < 50; ++i, ++c) { */
-/* 		if (i % 2 == 0) */
-/* 			snprintf(buf, 512, "item-long-%d", i); */
-/* 		else if (i % 6 == 0) */
-/* 			snprintf(buf, 512, "herpderp-%d", i); */
-/* 		else if (i % 7 == 0) */
-/* 			snprintf(buf, 512, "ksdfsdjhfsdf-%d", i); */
-/* 		else */
-/* 			snprintf(buf, 512, "hi-%d", i); */
-/* 		if (c > '~') c = '0'; */
-/* 		sprintf(smallbuf, "%c", c); */
-/* 		dx = draw_command(drw, dx, dy, cmd) + 20; */
-/* 		if (dx >= mw) { */
-/* 			dx = 0; */
-/* 			dy += bh; */
-/* 		} */
-/* 	} */
-/* } */
 
 static void
 draw_tree(Drw *drw, int x, int y, int w, int h) {
@@ -304,7 +260,6 @@ draw_tree(Drw *drw, int x, int y, int w, int h) {
 
 	struct cmdstack *cmdstack = cmdstack_top();
 
-	/* draw_tree_horizontal(drw, x, y, w, h); */
 	draw_tree_vertical(drw, cmdstack->children, cmdstack->nchildren, x, y,
 			   w, h);
 
@@ -316,7 +271,7 @@ draw_tree(Drw *drw, int x, int y, int w, int h) {
 static void
 cleanup(Drw *drw, int code) {
 	drw_free(drw);
-	exit(0);
+	exit(code);
 }
 
 static void
@@ -386,13 +341,8 @@ int main(void) {
 	screen = DefaultScreen(display);
 	root = RootWindow(display, screen);
 
-	// XXXembed
-	/* if (!embed || !(parentwin = strtol(embed, NULL, 0))) */
-	/* 	parentwin = root; */
-
 	parentwin = root;
-	/* struct command *cmds = */
-	/* 	test_root_commands(NULL, commands, cmdstack->nchildren); */
+
 	int res = cmdstack_push_(commands, LENGTH(commands));
 	assert(res);
 
