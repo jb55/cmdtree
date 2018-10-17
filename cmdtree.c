@@ -161,29 +161,12 @@ setup(Drw *drw)
 
 	// what do?
 	XMapRaised(display, win);
-	XSetInputFocus(display, win, RevertToParent, CurrentTime);
 
 	xim = XOpenIM(display, NULL, NULL, NULL);
 	xic = XCreateIC(xim, XNInputStyle, XIMPreeditNothing | XIMStatusNothing,
 			XNClientWindow, win, XNFocusWindow, win, NULL);
 	XSelectInput(display, win, ExposureMask | KeyPressMask);
 	XMapWindow(display, win);
-
-	XSetInputFocus(display, win, RevertToParent, CurrentTime);
-
-	// XXXembed
-	/* if (embed) { */
-	/* 	XSelectInput(dpy, parentwin, FocusChangeMask); */
-	/* 	if (XQueryTree(dpy, parentwin, &dw, &w, &dws, &du) && dws) { */
-	/* 		for (i = 0; i < du && dws[i] != win; ++i) */
-	/* 			XSelectInput(dpy, dws[i], FocusChangeMask); */
-	/* 		XFree(dws); */
-	/* 	} */
-	/* 	grabfocus(); */
-	/* } */
-
-	/* drw_resize(drw, mw, mh); */
-	/* draw_tree(drw); */
 }
 
 static const char *
