@@ -134,7 +134,7 @@ static struct command app_commands[] = {
 	DEFPREFIX("c", "calendar", calendar_commands)
 	DEFCMD("e", "edit", "edit")
 	DEFCMD("s", "signal", "signal-desktop")
-	DEFCMD("S", "skype", "skype")
+	DEFCMD("S", "skype", "skypeforlinux")
 	DEFCMD("t", "tweet", "dmenup tweet tweet")
 	DEFCMD("l", "lastpass", "dmenu-lpass")
 	DEFCMD("q", "qalc", "dmenupn calc qalc -t")
