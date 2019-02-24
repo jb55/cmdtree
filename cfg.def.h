@@ -107,6 +107,7 @@ static struct command window_commands[] = {
 	DEFCMD("c", "colorpick", "colorpick")
 	DEFCMD("S", "snap", "snap")
 	DEFCMD("s", "snap selection", "sleep 0.2; snap -s")
+	DEFCMD("w", "switch", "dswitcher urxvt")
 	DEFPREFIX("t", "theme", theme_commands)
 };
 
