@@ -141,6 +141,8 @@ static struct command app_commands[] = {
 	DEFPREFIX("b", "browser", browser_commands)
 	DEFPREFIX("c", "calendar", calendar_commands)
 	DEFPREFIX("a", "auth", auth_commands)
+	DEFPREFIX("d", "dev", dev_commands)
+	DEFPREFIX("v", "vm", vm_commands)
 	DEFCMD("e", "edit", "edit")
 	DEFCMD("s", "signal", "signal-desktop")
 	DEFCMD("S", "skype", "skypeforlinux")
@@ -166,20 +168,21 @@ static struct command media_commands[] = {
 	DEFCMD("-", "vol-", "amixer sset Master 10%-")
 };
 
+static struct command date_commands[] = {
+	DEFCMD("d", "local", "n mydate")
+	DEFCMD("u", "utc", "n mydate -u")
+};
 
 static struct command commands[] = {
 	DEFPREFIX("B", "bitcoin", bitcoin_commands)
 	DEFPREFIX("a", "apps", app_commands)
 	DEFPREFIX("e", "email", email_commands)
-	DEFPREFIX("g", "dev", dev_commands)
 	DEFPREFIX("m", "media", media_commands)
 	DEFPREFIX("p", "phone", phone_commands)
 	DEFPREFIX("s", "system", system_commands)
-	DEFPREFIX("v", "vm", vm_commands)
 	DEFPREFIX("w", "window", window_commands)
+	DEFPREFIX("d", "date", date_commands)
 	DEFCMD("b", "battery", "n acpi")
-	DEFCMD("d", "date", "n mydate")
-	DEFCMD("D", "utc", "n mydate -u")
 	DEFCMD("l", "lock", "slock")
 	DEFCMD("u", "clip", "dclip")
 };
