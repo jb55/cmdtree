@@ -164,8 +164,8 @@ static struct command media_commands[] = {
 	DEFCMD("p", "prev", "xdotool key XF86AudioPrev")
 	DEFCMD(" ", "play/pause", "xdotool key XF86AudioPlay")
 	DEFPREFIX("s", "spotify", spotify_commands)
-	DEFCMD("=", "vol+", "amixer sset Master 10%+")
-	DEFCMD("-", "vol-", "amixer sset Master 10%-")
+	DEFCMD("k", "vol+", "amixer sset Master 10%+")
+	DEFCMD("j", "vol-", "amixer sset Master 10%-")
 };
 
 static struct command date_commands[] = {
