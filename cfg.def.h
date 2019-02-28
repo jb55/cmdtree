@@ -132,14 +132,19 @@ static struct command calendar_commands[] = {
 	DEFCMD("M", "from-monad", "rsync -avzP 172.24.242.111:/home/jb55/var/cal/ /home/jb55/var/cal/")
 };
 
+static struct command auth_commands[] = {
+	DEFCMD("p", "lastpass", "dmenu-lpass")
+	DEFCMD("o", "otp", "otp")
+};
+
 static struct command app_commands[] = {
 	DEFPREFIX("b", "browser", browser_commands)
 	DEFPREFIX("c", "calendar", calendar_commands)
+	DEFPREFIX("a", "auth", auth_commands)
 	DEFCMD("e", "edit", "edit")
 	DEFCMD("s", "signal", "signal-desktop")
 	DEFCMD("S", "skype", "skypeforlinux")
 	DEFCMD("t", "tweet", "dmenup tweet tweet")
-	DEFCMD("l", "lastpass", "dmenu-lpass")
 	DEFCMD("q", "qalc", "dmenupn calc qalc -t")
 };
 
