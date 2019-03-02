@@ -173,6 +173,11 @@ static struct command date_commands[] = {
 	DEFCMD("u", "utc", "n mydate -u")
 };
 
+static struct command open_commands[] = {
+	DEFCMD("p", "downloads pdf", "open-dl /home/jb55/Downloads pdf")
+	DEFCMD("d", "docs pdf", "open-dl /home/jb55/docs pdf")
+};
+
 static struct command commands[] = {
 	DEFPREFIX("B", "bitcoin", bitcoin_commands)
 	DEFPREFIX("a", "apps", app_commands)
@@ -182,6 +187,7 @@ static struct command commands[] = {
 	DEFPREFIX("s", "system", system_commands)
 	DEFPREFIX("w", "window", window_commands)
 	DEFPREFIX("d", "date", date_commands)
+	DEFPREFIX("o", "open", open_commands)
 	DEFCMD("b", "battery", "n acpi")
 	DEFCMD("l", "lock", "slock")
 	DEFCMD("u", "clip", "dclip")
