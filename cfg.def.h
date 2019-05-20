@@ -124,7 +124,7 @@ static struct command calendar_commands[] = {
 	DEFCMD("c", "viscal", "/home/jb55/src/c/viscal/viscal /tmp/viscal/*.ics")
 	DEFCMD("s", "viscal-sync", "/home/jb55/src/c/viscal/sync")
 	DEFCMD("m", "to-monad", "rsync -avzP /home/jb55/var/cal/ 172.24.242.111:/home/jb55/var/cal/")
-	DEFCMD("M", "from-monad", "rsync -avzP 172.24.242.111:/home/jb55/var/cal/ /home/jb55/var/cal/")
+	DEFCMD("M", "from-monad", "rsync -avzP 172.24.242.111:/home/jb55/var/cal/ /home/jb55/var/cal/ && n echo done || n echo failed")
 };
 
 static struct command auth_commands[] = {
