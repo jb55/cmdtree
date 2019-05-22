@@ -39,11 +39,6 @@ static struct scheme schemes[SchemeLast] = {
 	                 },
 };
 
-static struct command browser_commands[] = {
-	DEFCMD("b", "qutebrowser", "qbrowser")
-	DEFCMD("f", "firefox", "firefox")
-};
-
 static struct command bitcoin_commands[] = {
 	DEFCMD("p", "price", "n btc")
 };
@@ -138,11 +133,11 @@ static struct command auth_commands[] = {
 };
 
 static struct command app_commands[] = {
-	DEFPREFIX("b", "browser", browser_commands)
 	DEFPREFIX("c", "calendar", calendar_commands)
 	DEFPREFIX("a", "auth", auth_commands)
 	DEFPREFIX("d", "dev", dev_commands)
 	DEFPREFIX("v", "vm", vm_commands)
+	DEFCMD("b", "browser", "browser")
 	DEFCMD("e", "edit", "edit")
 	DEFCMD("s", "signal", "signal-desktop")
 	DEFCMD("S", "skype", "skypeforlinux")
