@@ -170,6 +170,8 @@ static struct command date_commands[] = {
 
 static struct command open_commands[] = {
 	DEFCMD("p", "downloads pdf", "open-dl /home/jb55/Downloads pdf")
+	DEFCMD("P", "papers pdf", "open-dl /home/jb55/docs/papers pdf")
+	DEFCMD("c", "edit clipboard", "edit-clipboard")
 	DEFCMD("d", "docs pdf", "open-dl /home/jb55/docs pdf")
 };
 
