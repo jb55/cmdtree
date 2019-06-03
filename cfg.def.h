@@ -44,7 +44,12 @@ static struct command bitcoin_commands[] = {
 };
 
 static struct command chromecast_commands[] = {
-	DEFCMD("s", "play/pause", "n chromecast space play-paused")
+	DEFCMD(" ", "play/pause", "n chromecast space play-paused")
+	DEFCMD("p", "prev", "n chromecast p prev")
+	DEFCMD("n", "next", "n chromecast n next")
+	DEFCMD("s", "stop", "n chromecast stop stopped")
+	DEFCMD("q", "quit", "n chromecast quit quit")
+	DEFCMD("t", "subtitles", "n chromecast t subtitles")
 	DEFCMD("m", "mute", "n chromecast m muted")
 };
 
