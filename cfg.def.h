@@ -41,6 +41,7 @@ static struct scheme schemes[SchemeLast] = {
 
 static struct command bitcoin_commands[] = {
 	DEFCMD("p", "price", "n btc")
+	DEFCMD("b", "bcalc", "dmenupn bcalc bcalc")
 };
 
 static struct command chromecast_commands[] = {
