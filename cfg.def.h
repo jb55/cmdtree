@@ -123,7 +123,8 @@ static struct command system_commands[] = {
 };
 
 static struct command dev_commands[] = {
-	DEFCMD("l", "lightning issue", "xclip -o | head -n1 | xargs lissue")
+	DEFCMD("l", "lightning issue", "xclip -o | head -n1 | xargs ghissue ElementsProject lightning")
+	DEFCMD("b", "bitcoin issue", "xclip -o | head -n1 | xargs ghissue bitcoin bitcoin")
 };
 
 static struct command calendar_commands[] = {
