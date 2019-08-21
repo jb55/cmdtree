@@ -151,20 +151,20 @@ static struct command app_commands[] = {
 	DEFCMD("q", "qalc", "dmenupn calc qalc -t")
 };
 
-static struct command spotify_commands[] = {
-	DEFCMD("n", "next", "spotify-next")
-	DEFCMD("p", "prev", "spotify-prev")
-	DEFCMD(" ", "play/pause", "spotify-playpause")
-};
+/* static struct command spotify_commands[] = { */
+/* 	DEFCMD("n", "next", "spotify-next") */
+/* 	DEFCMD("p", "prev", "spotify-prev") */
+/* 	DEFCMD(" ", "play/pause", "spotify-playpause") */
+/* }; */
 
 
 static struct command media_commands[] = {
 	DEFPREFIX("c", "chromecast", chromecast_commands)
 	DEFCMD("b", "connect-bose", "connect-bose")
-	DEFCMD("n", "next", "xdotool key XF86AudioNext")
-	DEFCMD("p", "prev", "xdotool key XF86AudioPrev")
-	DEFCMD(" ", "play/pause", "xdotool key XF86AudioPlay")
-	DEFPREFIX("s", "spotify", spotify_commands)
+	DEFCMD("n", "next", "spotify-next")
+	DEFCMD("p", "prev", "spotify-prev")
+	DEFCMD(" ", "play/pause", "spotify-playpause")
+	/* DEFPREFIX("s", "spotify", spotify_commands) */
 	DEFCMD("k", "vol+", "amixer sset Master 10%+")
 	DEFCMD("j", "vol-", "amixer sset Master 10%-")
 };
