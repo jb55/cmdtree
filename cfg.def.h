@@ -103,12 +103,18 @@ static struct command theme_commands[] = {
 	DEFCMD("l", "light", "themeswitch light")
 };
 
+static struct command snap_commands[] = {
+	DEFCMD("F", "full no upload", "snap -n")
+	DEFCMD("f", "full", "snap")
+	DEFCMD("S", "selection no upload", "sleep 0.2; snap -n -s")
+	DEFCMD("s", "selection", "sleep 0.2; snap -s")
+}
+
 static struct command window_commands[] = {
 	DEFCMD("b", "bright", "bright")
 	DEFCMD("c", "colorpick", "colorpick")
-	DEFCMD("S", "snap", "snap")
-	DEFCMD("s", "snap selection", "sleep 0.2; snap -s")
 	DEFCMD("w", "switch", "dswitcher urxvt")
+	DEFPREFIX("s", "snap", snap_commands)
 	DEFPREFIX("t", "theme", theme_commands)
 };
 
