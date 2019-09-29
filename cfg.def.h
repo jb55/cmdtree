@@ -108,7 +108,7 @@ static struct command snap_commands[] = {
 	DEFCMD("f", "full", "snap")
 	DEFCMD("S", "selection no upload", "sleep 0.2; snap -n -s")
 	DEFCMD("s", "selection", "sleep 0.2; snap -s")
-}
+};
 
 static struct command window_commands[] = {
 	DEFCMD("b", "bright", "bright")
