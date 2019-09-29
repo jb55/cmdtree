@@ -48,7 +48,7 @@ static struct command chromecast_commands[] = {
 	DEFCMD(" ", "play/pause", "n chromecast space play-paused")
 	DEFCMD("p", "prev", "n chromecast p prev")
 	DEFCMD("n", "next", "n chromecast n next")
-	DEFCMD("s", "stop", "n chromecast stop stopped")
+	DEFCMD("s", "stop", "n chromecast s stopped")
 	DEFCMD("q", "quit", "n chromecast quit quit")
 	DEFCMD("t", "subtitles", "n chromecast t subtitles")
 	DEFCMD("m", "mute", "n chromecast m muted")
