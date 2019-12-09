@@ -110,12 +110,19 @@ static struct command snap_commands[] = {
 	DEFCMD("s", "selection", "sleep 0.2; snap -s")
 };
 
+static struct command focus_commands[] = {
+	DEFCMD("z", "zoom", "focus-zoom")
+	DEFCMD("b", "browser", "wmctrl -a qutebrowser")
+	DEFCMD("p", "pdf", "wmctrl -a pdf")
+};
+
 static struct command window_commands[] = {
 	DEFCMD("b", "bright", "bright")
 	DEFCMD("c", "colorpick", "colorpick")
 	DEFCMD("w", "switch", "dswitcher urxvt")
 	DEFPREFIX("s", "snap", snap_commands)
 	DEFPREFIX("t", "theme", theme_commands)
+	DEFPREFIX("f", "focus", focus_commands)
 };
 
 static struct command system_commands[] = {
@@ -145,16 +152,23 @@ static struct command auth_commands[] = {
 	DEFCMD("o", "otp", "otp")
 };
 
+static struct command kill_commands[] = {
+	DEFCMD("z", "zoom", "pkill zoom")
+};
+
 static struct command app_commands[] = {
 	DEFPREFIX("c", "calendar", calendar_commands)
 	DEFPREFIX("a", "auth", auth_commands)
+	DEFPREFIX("k", "kill", kill_commands)
 	DEFPREFIX("d", "dev", dev_commands)
 	DEFPREFIX("v", "vm", vm_commands)
 	DEFCMD("b", "browser", "browser")
 	DEFCMD("e", "edit", "edit")
 	DEFCMD("s", "signal", "signal-desktop")
+	DEFCMD("m", "spotify", "spotify")
 	DEFCMD("S", "skype", "skypeforlinux")
 	DEFCMD("q", "qalc", "dmenupn calc qalc -t")
+	DEFCMD("z", "zoom", "zoom-us")
 };
 
 /* static struct command spotify_commands[] = { */
