@@ -112,6 +112,7 @@ static struct command snap_commands[] = {
 
 static struct command focus_commands[] = {
 	DEFCMD("z", "zoom", "focus-zoom")
+	DEFCMD("s", "signal", "wmctrl -a Signal")
 	DEFCMD("b", "browser", "wmctrl -a qutebrowser")
 	DEFCMD("p", "pdf", "wmctrl -a pdf")
 };
