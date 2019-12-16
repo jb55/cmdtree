@@ -117,6 +117,12 @@ static struct command focus_commands[] = {
 	DEFCMD("p", "pdf", "wmctrl -a pdf")
 };
 
+static struct command notify_commands[] = {
+	DEFCMD("c", "close all", "dunstctl close-all")
+	DEFCMD("C", "close last", "dunstctl close")
+	DEFCMD("n", "open last", "dunstctl history-pop")
+};
+
 static struct command window_commands[] = {
 	DEFCMD("b", "bright", "bright")
 	DEFCMD("c", "colorpick", "colorpick")
@@ -211,6 +217,7 @@ static struct command commands[] = {
 	DEFPREFIX("s", "system", system_commands)
 	DEFPREFIX("w", "window", window_commands)
 	DEFPREFIX("d", "date", date_commands)
+	DEFPREFIX("n", "notify", notify_commands)
 	DEFPREFIX("o", "open", open_commands)
 	DEFCMD("b", "battery", "n acpi")
 	DEFCMD("l", "lock", "slock")
