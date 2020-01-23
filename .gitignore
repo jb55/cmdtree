@@ -5,3 +5,7 @@
 /TAGS
 /archive/
 /result
+
+shell.nix
+.env
+.out
