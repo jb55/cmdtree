@@ -114,6 +114,8 @@ static struct command focus_commands[] = {
 	DEFCMD("z", "zoom", "focus-zoom")
 	DEFCMD("s", "signal", "wmctrl -a Signal")
 	DEFCMD("b", "browser", "wmctrl -a qutebrowser")
+	DEFCMD("a", "android", "wmctrl -a 'Android Studio'")
+	DEFCMD("w", "wow", "wmctrl -a Warcraft")
 	DEFCMD("p", "pdf", "wmctrl -a pdf")
 };
 
@@ -123,13 +125,18 @@ static struct command notify_commands[] = {
 	DEFCMD("n", "open last", "dunstctl history-pop")
 };
 
+static struct command kill_commands[] = {
+	DEFCMD("z", "zoom", "pkill zoom")
+};
+
 static struct command window_commands[] = {
+	DEFPREFIX("s", "snap", snap_commands)
+	DEFPREFIX("t", "theme", theme_commands)
+	DEFPREFIX("k", "kill", kill_commands)
+	DEFPREFIX("f", "focus", focus_commands)
 	DEFCMD("b", "bright", "bright")
 	DEFCMD("c", "colorpick", "colorpick")
 	DEFCMD("w", "switch", "dswitcher urxvt")
-	DEFPREFIX("s", "snap", snap_commands)
-	DEFPREFIX("t", "theme", theme_commands)
-	DEFPREFIX("f", "focus", focus_commands)
 };
 
 static struct command system_commands[] = {
@@ -159,18 +166,14 @@ static struct command auth_commands[] = {
 	DEFCMD("o", "otp", "otp")
 };
 
-static struct command kill_commands[] = {
-	DEFCMD("z", "zoom", "pkill zoom")
-};
-
 static struct command app_commands[] = {
 	DEFPREFIX("c", "calendar", calendar_commands)
 	DEFPREFIX("a", "auth", auth_commands)
-	DEFPREFIX("k", "kill", kill_commands)
 	DEFPREFIX("d", "dev", dev_commands)
 	DEFPREFIX("v", "vm", vm_commands)
 	DEFCMD("b", "browser", "browser")
-	DEFCMD("e", "edit", "edit")
+	DEFCMD("B", "browser-work", "browser -r work")
+	DEFCMD("e", "edit", "edit -c")
 	DEFCMD("s", "signal", "signal-desktop")
 	DEFCMD("m", "spotify", "spotify")
 	DEFCMD("S", "skype", "skypeforlinux")
