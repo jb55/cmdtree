@@ -139,14 +139,16 @@ static struct command window_commands[] = {
 	DEFCMD("w", "switch", "dswitcher urxvt")
 };
 
+static struct command restart_commands[] = {
+	DEFCMD("s", "spotifyd", "systemctl --user restart spotifyd")
+};
+
 static struct command system_commands[] = {
 	DEFPREFIX("c", "copy/sync", sync_commands)
+	DEFPREFIX("r", "restart services", restart_commands)
 	DEFCMD("S", "suspend", "suspend")
 	DEFCMD("s", "my suspend", "my-suspend")
-	DEFCMD("r", "reboot", "reboot")
 	DEFCMD("k", "kill session", "killsession")
-	DEFCMD("i", "init user session", "initx")
-	DEFCMD("x", "restart xbindkeys", "pkill xbindkeys && xbindkeys")
 };
 
 static struct command dev_commands[] = {
