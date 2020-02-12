@@ -206,11 +206,16 @@ static struct command date_commands[] = {
 	DEFCMD("u", "utc", "n mydate -u")
 };
 
-static struct command open_commands[] = {
+static struct command open_doc_commands[] = {
 	DEFCMD("p", "downloads pdf", "open-dl /home/jb55/Downloads pdf")
 	DEFCMD("P", "papers pdf", "open-dl /home/jb55/docs/papers pdf")
 	DEFCMD("c", "edit clipboard", "edit-clipboard")
 	DEFCMD("d", "docs pdf", "open-dl /home/jb55/docs pdf")
+};
+
+static struct command open_commands[] = {
+	DEFPREFIX("d", "documents", open_doc_commands)
+	DEFCMD("z", "zoom link", "xclip -o | xargs zoom")
 };
 
 static struct command commands[] = {
