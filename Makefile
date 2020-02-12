@@ -1,7 +1,7 @@
 
 CFLAGS=-Os -g -Wall -Werror -I. -Wno-unused-function
-LDFLAGS=-lXft -lfontconfig -lX11 
-PREFIX ?= /usr/local
+LDFLAGS=-lXft -lfontconfig -lX11
+PREFIX ?= /home/jb55
 
 BIN=cmdtree
 
