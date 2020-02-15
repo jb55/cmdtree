@@ -213,9 +213,15 @@ static struct command open_doc_commands[] = {
 	DEFCMD("d", "docs pdf", "open-dl /home/jb55/docs pdf")
 };
 
+static struct command open_zoom_commands[] = {
+	DEFCMD("z", "zoom link", "xclip -o | xargs zoom")
+	DEFCMD("i", "zoom id", "xclip -o | xargs zoom-id")
+};
+
 static struct command open_commands[] = {
 	DEFPREFIX("d", "documents", open_doc_commands)
-	DEFCMD("z", "zoom link", "xclip -o | xargs zoom")
+	DEFPREFIX("z", "zoom", open_zoom_commands)
+	DEFCMD("o", "open", "xclip -o | xargs open")
 };
 
 static struct command commands[] = {
