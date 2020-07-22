@@ -80,6 +80,7 @@ static struct command email_notifications[] = {
 };
 
 static struct command email_commands[] = {
+	DEFCMD("c", "inbox zero", "n email-count")
 	DEFCMD("f", "fetch", "email-fetch")
 	DEFCMD("m", "sync monad", "n muchsync monad-local")
 	DEFCMD("s", "status", "n email-status-once")
@@ -108,6 +109,8 @@ static struct command snap_commands[] = {
 	DEFCMD("f", "full", "snap")
 	DEFCMD("S", "selection no upload", "sleep 0.2; snap -n -s")
 	DEFCMD("s", "selection", "sleep 0.2; snap -s")
+	DEFCMD("d", "dragon last ss", "dragon $(last_ss)")
+	DEFCMD("D", "select no upload dragon", "sleep 0.2; snap -n -s; sleep 0.2; dragon $(last_ss)")
 };
 
 static struct command focus_commands[] = {
@@ -115,7 +118,7 @@ static struct command focus_commands[] = {
 	DEFCMD("s", "signal", "wmctrl -a Signal")
 	DEFCMD("b", "browser", "wmctrl -a qutebrowser")
 	DEFCMD("a", "android", "wmctrl -a 'Android Studio'")
-	DEFCMD("w", "wow", "wmctrl -a Warcraft")
+	DEFCMD("w", "wow", "focus-wow")
 	DEFCMD("p", "pdf", "wmctrl -a pdf")
 };
 
@@ -136,11 +139,13 @@ static struct command window_commands[] = {
 	DEFPREFIX("f", "focus", focus_commands)
 	DEFCMD("b", "bright", "bright")
 	DEFCMD("c", "colorpick", "colorpick")
-	DEFCMD("w", "switch", "dswitcher urxvt")
+	DEFCMD("w", "switch", "dswitcher")
 };
 
 static struct command restart_commands[] = {
-	DEFCMD("s", "spotifyd", "systemctl --user restart spotifyd")
+	DEFCMD("s", "spotifyd", "systemctl --user restart spotifyd && notify-send restarted spotfyd")
+	DEFCMD("e", "emacs", "systemctl --user restart emacs && notify-send restarted emacs")
+	DEFCMD("p", "phonectl", "systemctl --user restart phonectl && notify-send restarted phonectl")
 };
 
 static struct command system_commands[] = {
@@ -151,7 +156,7 @@ static struct command system_commands[] = {
 	DEFCMD("k", "kill session", "killsession")
 };
 
-static struct command dev_commands[] = {
+static struct command issue_commands[] = {
 	DEFCMD("l", "lightning issue", "xclip -o | head -n1 | xargs ghissue ElementsProject lightning")
 	DEFCMD("b", "bitcoin issue", "xclip -o | head -n1 | xargs ghissue bitcoin bitcoin")
 };
@@ -171,7 +176,6 @@ static struct command auth_commands[] = {
 static struct command app_commands[] = {
 	DEFPREFIX("c", "calendar", calendar_commands)
 	DEFPREFIX("a", "auth", auth_commands)
-	DEFPREFIX("d", "dev", dev_commands)
 	DEFPREFIX("v", "vm", vm_commands)
 	DEFCMD("b", "browser", "browser")
 	DEFCMD("B", "browser-work", "browser -r work")
@@ -214,12 +218,13 @@ static struct command open_doc_commands[] = {
 };
 
 static struct command open_zoom_commands[] = {
-	DEFCMD("z", "zoom link", "xclip -o | xargs zoom")
+	DEFCMD("z", "zoom link", "xclip -o | xargs zoom-link-opener")
 	DEFCMD("i", "zoom id", "xclip -o | xargs zoom-id")
 };
 
 static struct command open_commands[] = {
 	DEFPREFIX("d", "documents", open_doc_commands)
+	DEFPREFIX("i", "issues", issue_commands)
 	DEFPREFIX("z", "zoom", open_zoom_commands)
 	DEFCMD("o", "open", "xclip -o | xargs open")
 };
