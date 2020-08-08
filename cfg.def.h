@@ -170,7 +170,7 @@ static struct command calendar_commands[] = {
 
 static struct command auth_commands[] = {
 	DEFCMD("p", "lastpass", "dmenu-lpass")
-	DEFCMD("o", "otp", "otp")
+	DEFCMD("o", "otp", "n otp | xclip")
 };
 
 static struct command app_commands[] = {
@@ -226,6 +226,7 @@ static struct command open_commands[] = {
 	DEFPREFIX("d", "documents", open_doc_commands)
 	DEFPREFIX("i", "issues", issue_commands)
 	DEFPREFIX("z", "zoom", open_zoom_commands)
+	DEFCMD("s", "spotify", "xclip -o | xargs spotify-open")
 	DEFCMD("o", "open", "xclip -o | xargs open")
 };
 
