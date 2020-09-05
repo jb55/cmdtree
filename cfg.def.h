@@ -130,6 +130,8 @@ static struct command notify_commands[] = {
 
 static struct command kill_commands[] = {
 	DEFCMD("z", "zoom", "pkill zoom")
+	DEFCMD("m", "spotify", "/home/jb55/bin/killspotify")
+	DEFCMD("s", "signal", "pkill --oldest signal-desktop")
 };
 
 static struct command window_commands[] = {
@@ -242,6 +244,6 @@ static struct command commands[] = {
 	DEFPREFIX("n", "notify", notify_commands)
 	DEFPREFIX("o", "open", open_commands)
 	DEFCMD("b", "battery", "n acpi")
-	DEFCMD("l", "lock", "slock")
+	DEFCMD("l", "lock", "lock")
 	DEFCMD("u", "clip", "dclip")
 };
