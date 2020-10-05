@@ -113,6 +113,10 @@ static struct command snap_commands[] = {
 	DEFCMD("D", "select no upload dragon", "sleep 0.2; snap -n -s; sleep 0.2; dragon $(last_ss)")
 };
 
+//static struct command query_commands[] = {
+//	DEFCMD("u", "urban-dict", "dmenupn ud ud -plain")
+//};
+
 static struct command focus_commands[] = {
 	DEFCMD("z", "zoom", "focus-zoom")
 	DEFCMD("s", "signal", "wmctrl -a Signal")
@@ -126,12 +130,15 @@ static struct command notify_commands[] = {
 	DEFCMD("c", "close all", "dunstctl close-all")
 	DEFCMD("C", "close last", "dunstctl close")
 	DEFCMD("n", "open last", "dunstctl history-pop")
+	DEFCMD("N", "open last 5", "dunstctl history-pop;dunstctl history-pop;dunstctl history-pop;dunstctl history-pop;dunstctl history-pop")
 };
 
 static struct command kill_commands[] = {
 	DEFCMD("z", "zoom", "pkill zoom")
 	DEFCMD("m", "spotify", "/home/jb55/bin/killspotify")
 	DEFCMD("s", "signal", "pkill --oldest signal-desktop")
+	DEFCMD("S", "skype", "pkill --oldest skype")
+	DEFCMD("b", "browser", "browser kill")
 };
 
 static struct command window_commands[] = {
@@ -227,9 +234,10 @@ static struct command open_zoom_commands[] = {
 static struct command open_commands[] = {
 	DEFPREFIX("d", "documents", open_doc_commands)
 	DEFPREFIX("i", "issues", issue_commands)
+	//DEFPREFIX("q", "query", query_commands)
 	DEFPREFIX("z", "zoom", open_zoom_commands)
 	DEFCMD("s", "spotify", "xclip -o | xargs spotify-open")
-	DEFCMD("o", "open", "xclip -o | xargs open")
+	DEFCMD("u", "urban-dict", "dmenupn ud ud -plain")
 };
 
 static struct command commands[] = {
