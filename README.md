@@ -6,12 +6,12 @@ cmdtree
 
 ![cmdtree2](https://jb55.com/s/cmdtree2.png?)
 
-cmdtree is a command launcher in the form of a trie. Commands are launched by a
-sequence of keys that form a path in this trie.
+cmdtree is a command launcher in the form of a tree. Commands are launched by a
+sequence of keys that form a path in this tree.
 
 Configuring cmdtree currently requires you to edit a C header file, similar to
 dmenu. You will need to tweak [cfg.def.h](cfg.def.h) to your liking before
-building. This is temporary until the configuration file format is complete,
+building. ~This is temporary until the configuration file format is complete~,
 but it has the benefit of being quite fast to launch!
 
 If you're curious, you can check out [my config here](https://github.com/jb55/cmdtree/blob/my-config/cfg.def.h)
