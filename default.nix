@@ -1,14 +1,9 @@
-{ nixpkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixpkgs> {} }:
 
-with nixpkgs;
-
-stdenv.mkDerivation {
-  name = "cmdtree";
+pkgs.stdenv.mkDerivation {
+  pname = "cmdtree";
+  version = "0.1";
   src = ./.;
-  buildPhase = "make";
-  installPhase = ''
-    mkdir -p $out/bin
-    cp ./cmdtree $out/bin
-  '';
-  buildInputs = [ pkgs.xorg.libX11 pkgs.xorg.libXft ];
+  makeFlags = "PREFIX=$(out)";
+  buildInputs = with pkgs; [ xorg.libX11 xorg.libXft ];
 }
