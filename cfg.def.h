@@ -228,6 +228,7 @@ static struct command open_doc_commands[] = {
 };
 
 static struct command open_zoom_commands[] = {
+	DEFCMD("s", "steamoji-standup", "steamoji-zoom")
 	DEFCMD("z", "zoom link", "xclip -o | xargs zoom-link-opener")
 	DEFCMD("i", "zoom id", "xclip -o | xargs zoom-id")
 };
