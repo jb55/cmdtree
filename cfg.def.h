@@ -217,6 +217,7 @@ static struct command media_commands[] = {
 static struct command date_commands[] = {
 	DEFCMD("d", "local", "n mydate")
 	DEFCMD("u", "utc", "n mydate -u")
+	DEFCMD("l", "utc-local", "dmenupn localutc localutc")
 };
 
 static struct command open_doc_commands[] = {
