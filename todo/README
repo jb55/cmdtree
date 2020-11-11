@@ -1,0 +1,13 @@
+Issue tracker
+-------------
+
+Submit issues by sending a patch
+
+Format
+------
+
+todo/issue-name.txt:
+
+title: Some issue title
+description: some 
+tags: feature,bug,cli
