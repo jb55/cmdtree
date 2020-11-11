@@ -8,6 +8,6 @@ Format
 
 todo/issue-name.txt:
 
-title: Some issue title
-description: some 
-tags: feature,bug,cli
+n: Some issue title
+d: some 
+t: feature,bug,cli
