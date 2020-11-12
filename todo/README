@@ -6,8 +6,20 @@ Submit issues by sending a patch
 Format
 ------
 
+n: name
+d: description
+t: tags
+i: optional email message-id for the issue
+
+You can use In-Reply-To: <message-id> from your email client to comment on
+this issue.
+
+Example
+-------
+
 todo/issue-name.txt:
 
 n: Some issue title
 d: some 
 t: feature,bug,cli
+i: message-id
