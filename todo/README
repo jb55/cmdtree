@@ -1,7 +1,8 @@
 Issue tracker
--------------
+=============
 
-Submit issues by sending a patch
+Submit issues by sending a patch with the following format under
+todo/issue-name.txt:
 
 Format
 ------
@@ -23,3 +24,9 @@ n: Some issue title
 d: some 
 t: feature,bug,cli
 i: message-id
+
+Fetching discussions
+--------------------
+
+curl 'https://lists.sr.ht/~jb55/public-inbox/<message-id>/mbox' to get the
+email thread for this issue
