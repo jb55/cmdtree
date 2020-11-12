@@ -1,4 +1,0 @@
-n: Terminal mode
-d: It would be nice if there was a terminal mode to launch commands from the command line
-t: feature,cli
-i: 20201111234111.636-1-jb55@jb55.com
