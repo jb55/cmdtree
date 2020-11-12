@@ -28,5 +28,7 @@ i: message-id
 Fetching discussions
 --------------------
 
+View the discussion online: https://lists.sr.ht/~jb55/public-inbox/<message-id>
+
 curl 'https://lists.sr.ht/~jb55/public-inbox/<message-id>/mbox' to get the
 email thread for this issue
