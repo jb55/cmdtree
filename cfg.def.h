@@ -233,6 +233,10 @@ static struct command open_zoom_commands[] = {
 	DEFCMD("i", "zoom id", "xclip -o | xargs zoom-id")
 };
 
+static struct command copy_commands[] = {
+	DEFCMD("e", "emoji", "dmenu-emoji")
+};
+
 static struct command open_commands[] = {
 	DEFPREFIX("d", "documents", open_doc_commands)
 	DEFPREFIX("i", "issues", issue_commands)
@@ -253,6 +257,7 @@ static struct command commands[] = {
 	DEFPREFIX("d", "date", date_commands)
 	DEFPREFIX("n", "notify", notify_commands)
 	DEFPREFIX("o", "open", open_commands)
+	DEFPREFIX("c", "copy", copy_commands)
 	DEFCMD("b", "battery", "n acpi")
 	DEFCMD("l", "lock", "lock")
 	DEFCMD("u", "clip", "dclip")
