@@ -216,6 +216,7 @@ static struct command media_commands[] = {
 
 static struct command date_commands[] = {
 	DEFCMD("d", "local", "n mydate")
+	DEFCMD("e", "est", "n etdate")
 	DEFCMD("u", "utc", "n mydate -u")
 	DEFCMD("l", "utc-local", "dmenupn localutc localutc")
 };
@@ -242,7 +243,7 @@ static struct command open_commands[] = {
 	DEFPREFIX("i", "issues", issue_commands)
 	//DEFPREFIX("q", "query", query_commands)
 	DEFPREFIX("z", "zoom", open_zoom_commands)
-	DEFCMD("s", "spotify", "xclip -o | xargs spotify-open")
+	DEFCMD("s", "steamoji-code", "n steamoji-only-code")
 	DEFCMD("u", "urban-dict", "dmenupn ud ud -plain")
 };
 
