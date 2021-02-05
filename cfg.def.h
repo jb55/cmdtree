@@ -118,12 +118,13 @@ static struct command snap_commands[] = {
 //};
 
 static struct command focus_commands[] = {
-	DEFCMD("z", "zoom", "focus-zoom")
-	DEFCMD("s", "signal", "wmctrl -a Signal")
-	DEFCMD("b", "browser", "wmctrl -a qutebrowser")
 	DEFCMD("a", "android", "wmctrl -a 'Android Studio'")
-	DEFCMD("w", "wow", "focus-wow")
+	DEFCMD("b", "browser", "wmctrl -a qutebrowser")
+	DEFCMD("e", "emacs", "wmctrl -a Emacs")
 	DEFCMD("p", "pdf", "wmctrl -a pdf")
+	DEFCMD("s", "signal", "wmctrl -a Signal")
+	DEFCMD("w", "wow", "focus-wow")
+	DEFCMD("z", "zoom", "focus-zoom")
 };
 
 static struct command notify_commands[] = {
@@ -238,11 +239,19 @@ static struct command copy_commands[] = {
 	DEFCMD("e", "emoji", "dmenu-emoji")
 };
 
+static struct command web_commands[] = {
+	DEFCMD("p", "plainweb", "xclip -o | xargs urxvtc -e plainweb")
+	DEFCMD("c", "curl", "xclip -o | xargs visual-curl")
+	DEFCMD("s", "search", "ddg-dmenu")
+};
+
 static struct command open_commands[] = {
 	DEFPREFIX("d", "documents", open_doc_commands)
 	DEFPREFIX("i", "issues", issue_commands)
 	//DEFPREFIX("q", "query", query_commands)
+	DEFPREFIX("w", "web", web_commands)
 	DEFPREFIX("z", "zoom", open_zoom_commands)
+	DEFCMD("o", "open", "xclip -o | xargs open")
 	DEFCMD("s", "steamoji-code", "n steamoji-only-code")
 	DEFCMD("u", "urban-dict", "dmenupn ud ud -plain")
 };
