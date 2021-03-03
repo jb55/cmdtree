@@ -150,6 +150,7 @@ static struct command window_commands[] = {
 	DEFCMD("b", "bright", "bright")
 	DEFCMD("c", "colorpick", "colorpick")
 	DEFCMD("w", "switch", "dswitcher")
+	DEFCMD("r", "rename", "zenity --entry --text=name: | xargs x11-rename")
 };
 
 static struct command restart_commands[] = {
@@ -241,6 +242,7 @@ static struct command copy_commands[] = {
 
 static struct command web_commands[] = {
 	DEFCMD("p", "plainweb", "xclip -o | xargs urxvtc -e plainweb")
+	DEFCMD("P", "pdfnow", "xclip -o | xargs curl -sL | pdfnow html")
 	DEFCMD("c", "curl", "xclip -o | xargs visual-curl")
 	DEFCMD("s", "search", "ddg-dmenu")
 };
