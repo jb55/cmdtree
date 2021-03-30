@@ -1,0 +1,34 @@
+Issue tracker
+=============
+
+Submit issues by sending a patch with the following format under
+todo/issue-name.txt:
+
+Format
+------
+
+n: name
+d: description
+t: tags
+i: optional email message-id for the issue
+
+You can use In-Reply-To: <message-id> from your email client to comment on
+this issue.
+
+Example
+-------
+
+todo/issue-name.txt:
+
+n: Some issue title
+d: some 
+t: feature,bug,cli
+i: message-id
+
+Fetching discussions
+--------------------
+
+View the discussion online: https://lists.sr.ht/~jb55/public-inbox/<message-id>
+
+curl 'https://lists.sr.ht/~jb55/public-inbox/<message-id>/mbox' to get the
+email thread for this issue
