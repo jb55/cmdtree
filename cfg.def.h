@@ -250,8 +250,13 @@ static struct command web_commands[] = {
 	DEFCMD("s", "search", "ddg-dmenu")
 };
 
+static struct command edit_commands[] = {
+	DEFCMD("s", "scratch", "urxvt -e scratch")
+};
+
 static struct command open_commands[] = {
 	DEFPREFIX("d", "documents", open_doc_commands)
+	DEFPREFIX("e", "edit", edit_commands)
 	DEFPREFIX("i", "issues", issue_commands)
 	//DEFPREFIX("q", "query", query_commands)
 	DEFPREFIX("w", "web", web_commands)
