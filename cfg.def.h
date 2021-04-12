@@ -192,6 +192,7 @@ static struct command app_commands[] = {
 	DEFCMD("b", "browser", "browser")
 	DEFCMD("B", "browser-work", "browser -r work")
 	DEFCMD("e", "edit", "edit -c")
+	DEFCMD("g", "gemini", "lagrange")
 	DEFCMD("s", "signal", "signal-desktop")
 	DEFCMD("m", "spotify", "spotify")
 	DEFCMD("S", "skype", "skypeforlinux")
