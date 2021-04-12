@@ -82,6 +82,7 @@ static struct command email_notifications[] = {
 static struct command email_commands[] = {
 	DEFCMD("c", "inbox zero", "n email-count")
 	DEFCMD("f", "fetch", "email-fetch")
+	DEFCMD("y", "send", "n msmtp-queue -r")
 	DEFCMD("m", "sync monad", "n muchsync monad-local")
 	DEFCMD("s", "status", "n email-status-once")
 	DEFPREFIX("n", "notifications", email_notifications)
